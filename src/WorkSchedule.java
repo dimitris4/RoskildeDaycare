@@ -1,12 +1,34 @@
 import java.util.ArrayList;
 import java.util.Date;
 
+// Working time for dagplejer (caretaker) in Denmark is 48 hours a week within kl. 06.00-18.00
+// source: http://www.dagplejen.dk/loen-og-arbejdsforhold
+
 public class WorkSchedule {
-    public static final double WORKING_TIME_IN_A_DAY = 7.50;
-    public static final double BRAKE_TIME_IN_A_DAY = 0.50;
-    private int WorkScheduleID;
-    private int EmployeeID;
+    public static final int WORKING_HOURS_WEEK_FULL_TIME = 48;
+    public static final int WORKING_HOURS_WEEK_PART_TIME = 15;
+    public static final double HOURLY_WAGE = 150.00;
+    static int WorkScheduleID; // auto-increment ID
+    private int employeeID;
+    private Date startingDate;
+    private Date endingDate;
     private ArrayList<Date> days;
+    private double total_hours;
+    private boolean isFullTime;
+
+    // constructor for creating work schedule for full time employees
+    public WorkSchedule(int employeeID, boolean isFullTime) {
+        this.employeeID = employeeID;
+        total_hours = WORKING_HOURS_WEEK_FULL_TIME;
+        this.isFullTime = isFullTime;
+    }
+
+    // constructor for creating work schedule for part time employees (given the amount of hours they want to commit)
+    public WorkSchedule(int employeeID, boolean isFullTime, int total_hours) {
+        this.employeeID = employeeID;
+        this.total_hours = total_hours;
+        this.isFullTime = isFullTime;
+    }
 
     public int getWorkScheduleID() {
         return WorkScheduleID;
@@ -17,11 +39,11 @@ public class WorkSchedule {
     }
 
     public int getEmployeeID() {
-        return EmployeeID;
+        return employeeID;
     }
 
     public void setEmployeeID(int employeeID) {
-        EmployeeID = employeeID;
+        this.employeeID = employeeID;
     }
 
     public ArrayList<Date> getDays() {
@@ -32,11 +54,27 @@ public class WorkSchedule {
         this.days = days;
     }
 
+    public Date getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
+    }
+
+    public Date getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
+
     @Override
     public String toString() {
         return "WorkSchedule{" +
                 "WorkScheduleID=" + WorkScheduleID +
-                ", EmployeeID=" + EmployeeID +
+                ", EmployeeID=" + employeeID +
                 ", days=" + days +
                 '}';
     }
