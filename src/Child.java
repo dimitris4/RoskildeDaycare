@@ -2,8 +2,15 @@ import java.util.ArrayList;
 
 public class Child {
     private int childID;
+    private static int childIDCounter = 1;
     private int parentID;
     private boolean onWaitingList;
+
+    // constructor
+    public Child(int parentID) {
+        this.childID = childIDCounter++;
+        this.parentID = parentID;
+    }
 
     public int getChildID() {
         return childID;

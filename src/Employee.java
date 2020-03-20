@@ -1,17 +1,22 @@
-import java.util.ArrayList;
-
 public class Employee extends Person {
-    private int EmployeeID;
+    private int employeeID;
+    private static int employeeIDCounter = 1;
     private WorkSchedule workSchedule;
     private String username;
     private String password;
 
+    // constructor
+    public Employee() {
+        super();
+        this.employeeID = employeeIDCounter++;
+    }
+
     public int getEmployeeID() {
-        return EmployeeID;
+        return employeeID;
     }
 
     public void setEmployeeID(int employeeID) {
-        EmployeeID = employeeID;
+        this.employeeID = employeeID;
     }
 
     public WorkSchedule getWorkSchedule() {
@@ -36,5 +41,15 @@ public class Employee extends Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeID=" + employeeID +
+                ", workSchedule=" + workSchedule +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

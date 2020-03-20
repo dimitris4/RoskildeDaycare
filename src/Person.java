@@ -1,8 +1,14 @@
 public class Person {
+    private static int personIDCounter = 1;
     private int personID;
     private String firstName;
     private String lastName;
     private int telephone;
+
+    // constructor
+    public Person() {
+        this.personID = personIDCounter++;
+    }
 
     public int getPersonID() {
         return personID;
@@ -34,5 +40,15 @@ public class Person {
 
     public void setTelephone(int telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personID=" + personID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", telephone=" + telephone +
+                '}';
     }
 }

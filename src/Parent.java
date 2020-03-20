@@ -2,7 +2,13 @@ import java.util.ArrayList;
 
 public class Parent extends Person {
     private int parentID;
+    private static int parentIDCounter = 0;
     private ArrayList<Child> children;
+
+    // constructor
+    public Parent() {
+        this.parentID = parentIDCounter++;
+    }
 
     public int getParentID() {
         return parentID;
