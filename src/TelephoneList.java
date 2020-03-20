@@ -11,6 +11,10 @@ public class TelephoneList {
         this.telephoneList = telephoneList;
     }
 
+    public void add(Person person) {
+        telephoneList.add(person);
+    }
+
     @Override
     public String toString() {
         return "TelephoneList{" +
