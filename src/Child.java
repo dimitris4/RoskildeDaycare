@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Child {
+
     private int childID;
     private static int childIDCounter = 1;
     private int parentID;

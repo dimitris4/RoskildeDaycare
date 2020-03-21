@@ -1,9 +1,10 @@
 public class Person {
+
     private static int personIDCounter = 1;
     private int personID;
     private String firstName;
     private String lastName;
-    private int telephone;
+    private String telephone;
 
     // constructor
     public Person() {
@@ -34,11 +35,11 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

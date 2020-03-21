@@ -1,9 +1,10 @@
-public class Administrator extends Employee {
+public class Admin extends Employee {
+
     private static int adminIDCounter = 1;
     private int adminID;
 
     // constructor
-    public Administrator() {
+    public Admin() {
         super();
         this.adminID = adminIDCounter++;
     }
