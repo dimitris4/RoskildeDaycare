@@ -7,7 +7,7 @@ public class UserInterface {
     }
 
     public void adminMenu() {
-
+        System.out.println("Another pull / push Test");
     }
 
     public void employeeMenu() {
