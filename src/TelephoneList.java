@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+// I don't think we need a telephone list because it will contain the same data as the Person class
 public class TelephoneList {
     private ArrayList<Person> telephoneList;
 

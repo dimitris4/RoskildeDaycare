@@ -1,7 +1,7 @@
 public class Employee extends Person {
     private int employeeID;
     private static int employeeIDCounter = 1;
-    private WorkSchedule workSchedule;
+    private int workScheduleID = -1; // set -1 by default until the given employee is assigned a work schedule
     private String username;
     private String password;
 
@@ -19,12 +19,12 @@ public class Employee extends Person {
         this.employeeID = employeeID;
     }
 
-    public WorkSchedule getWorkSchedule() {
-        return workSchedule;
+    public int getWorkSchedule() {
+        return workScheduleID;
     }
 
-    public void setWorkSchedule(WorkSchedule workSchedule) {
-        this.workSchedule = workSchedule;
+    public void setWorkSchedule(int workScheduleID) {
+        this.workScheduleID = workScheduleID;
     }
 
     public String getUsername() {
@@ -45,11 +45,7 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeID=" + employeeID +
-                ", workSchedule=" + workSchedule +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return employeeID + " " + getPersonID() + " " + workScheduleID  + " " + username + " " +
+                password;
     }
 }

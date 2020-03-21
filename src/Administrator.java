@@ -19,8 +19,6 @@ public class Administrator extends Employee {
 
     @Override
     public String toString() {
-        return "Administrator{" +
-                "adminID=" + adminID + "employeeID=" + this.getEmployeeID() +
-                '}';
+        return  adminID + " " + getEmployeeID() + " " + getPersonID();
     }
 }

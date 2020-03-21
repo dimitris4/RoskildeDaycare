@@ -1,14 +1,11 @@
 import java.util.Date;
 
-// break time is 0.5 hours and if the shift is equal or more than 12 hours, then break time is 1 hour.
-
 public class Shift {
     private int shiftID;
     private static int shiftIDCounter = 1;
     private int workScheduleID;
     private Date startingTime;
     private Date endingTime;
-    //private double workingHours = endingTime - startingTime;
 
     // constructor
     public Shift(int workScheduleID) {
@@ -43,9 +40,6 @@ public class Shift {
 
     @Override
     public String toString() {
-        return "Shift{" +
-                "startingTime=" + startingTime +
-                ", endingTime=" + endingTime +
-                '}';
+        return shiftID + " " + workScheduleID + " " + startingTime + " " + endingTime;
     }
 }

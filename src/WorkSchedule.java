@@ -1,22 +1,19 @@
-import java.util.ArrayList;
-import java.util.Date;
-
 public class WorkSchedule {
-    public static final double HOURLY_WAGE = 150.00;
-    static int WorkScheduleID; // auto-increment ID
+    private static int workScheduleIDCounter = 0; // auto-increment ID
+    private int workScheduleID;
     private int employeeID;
-    private ArrayList<Shift> shifts;
-    private double totalHours;
 
     // constructor
-    public WorkSchedule() {}
+    public WorkSchedule() {
+        this.workScheduleID = workScheduleIDCounter++;
+    }
 
     public int getWorkScheduleID() {
-        return WorkScheduleID;
+        return workScheduleID;
     }
 
     public void setWorkScheduleID(int workScheduleID) {
-        WorkScheduleID = workScheduleID;
+        this.workScheduleID = workScheduleID;
     }
 
     public int getEmployeeID() {
@@ -27,23 +24,9 @@ public class WorkSchedule {
         this.employeeID = employeeID;
     }
 
-    public ArrayList<Shift> getShifts() {
-        return shifts;
-    }
-
-    public void setShifts(ArrayList<Shift> shifts) {
-        this.shifts = shifts;
-    }
-
-    public double getTotalHours() {
-        return totalHours;
-    }
-
-    public void calculateTotal_hours() {
-        int totalHours=0;
-        for (int i=0; i<= shifts.size(); i++) {
-            //totalHours =+ shifts.get(i).workingHours;
-        }
+    @Override
+    public String toString() {
+        return workScheduleID + " " + employeeID;
     }
 }
 

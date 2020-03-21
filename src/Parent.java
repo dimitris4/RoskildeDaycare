@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Parent extends Person {
     private int parentID;
     private static int parentIDCounter = 0;
-    private ArrayList<Child> children;
 
     // constructor
     public Parent() {
@@ -18,19 +17,8 @@ public class Parent extends Person {
         this.parentID = parentID;
     }
 
-    public ArrayList<Child> getChildren() {
-        return children;
-    }
-
-    public void setChildren(ArrayList<Child> children) {
-        this.children = children;
-    }
-
     @Override
     public String toString() {
-        return "Parent{" +
-                "parentID=" + parentID +
-                ", children=" + children +
-                '}';
+        return parentID + " " + getPersonID();
     }
 }
