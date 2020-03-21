@@ -21,13 +21,13 @@ public class MyApp {
 
         //starts logInUI
         UserInterface UI = new UserInterface();
-        currentUser = UI.logInMenu();
-        if (currentUser instanceof Admin) {
+        Employee user = UI.logInMenu();
+
+        //Selects menu based on acceslevel
+        if (user.getAccessLevel() == 2) {
             UI.adminMenu();
-            System.out.println("admin login success");
-        } else {
+        } else if ( user.getAccessLevel() == 1 ){
             UI.employeeMenu();
-            System.out.println("employee login success");
         }
 
     }
@@ -46,17 +46,56 @@ public class MyApp {
         // 5 : ArrayList of Integers
         // 6 : ArrayList of Integers
         // 7 : HashMap< String username, String password >
-        admins = (ArrayList<Admin>) loadedLists.get(0);
+
+        //FOR USE
+        /*admins = (ArrayList<Admin>) loadedLists.get(0);
         employees = (ArrayList<Employee>) loadedLists.get(1);
         workSchedules = (ArrayList<WorkSchedule>) loadedLists.get(2);
         children = (ArrayList<Child>) loadedLists.get(3);
         parents = (ArrayList<Parent>) loadedLists.get(4);
         telephoneList = (ArrayList<Integer>) loadedLists.get(5);
         waitingList = (ArrayList<Integer>) loadedLists.get(6);
-        userLogIn = (HashMap<String, String>) loadedLists.get(7);
+        userLogIn = (HashMap<String, String>) loadedLists.get(7);*/
+
+        //FOR TESTING
+        Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "teodor");
+        admins.add(testUser);
+        admins.get(0).toStringPrint();
+        admins.get(0).toStringUserInfo();
+        userLogIn.put(testUser.getUsername(), testUser.getPassword());
     }
 
     //Getters n Setters
+    public static Employee getEmployee (String username) {
+
+        Employee user = new Employee();
+
+        //check if username matches admin usernames
+        for (int i = admins.get(0).getEmployeeID()-1; i < admins.size(); i++) {
+            if (admins.get(i).getUsername().equals(username)) {
+                user = admins.get(i);
+            }
+        }
+
+        //only runs if the username doenst match an admin username
+        if (user == null) {
+
+            //check if username matches employee usernames
+            for (int j = employees.get(0).getEmployeeID()-1; j < employees.size(); j++) {
+
+                if (employees.get(j).getUsername().equals(username)) {
+                    user = employees.get(j);
+                }
+            }
+        }
+
+        //if no matches where found
+        if (user == null) {
+            System.out.println("** There where no matching usernames. ** ");
+        }
+        return user;
+    }
+
     public static Person getCurrentUser() {
         return currentUser;
     }
@@ -65,12 +104,35 @@ public class MyApp {
         MyApp.currentUser = currentUser;
     }
 
-    public static ArrayList<Admin> getAdmin() {
+    //Returns full Admin list
+    public static ArrayList<Admin> getAdmins() {
         return admins;
     }
 
-    public static void setAdmin(ArrayList<Admin> admins) {
+    //Returns 1 Admin Object
+    public static Admin getAdmin(int adminID) {
+
+        Admin admin = null;
+
+        for (int i = 0; i < admins.size(); i++){
+
+            if ( admins.get(i).getAdminID() == adminID ){
+                admin = admins.get(i);
+            }
+        }
+        if (admin == null) {
+            System.out.println("** no match was found **");
+        }
+        return admin;
+    }
+
+    //Set full adminlist
+    public static void setAdmins(ArrayList<Admin> admins) {
         MyApp.admins = admins;
+    }
+
+    public static void setAdmins(Admin admin, int adminID) {
+        admins.set(adminID, admin);
     }
 
     public static ArrayList<Employee> getEmployees() {

@@ -3,9 +3,48 @@ public class UserInterface {
     private int space = 100;
 
     public Employee logInMenu() {
+
+        Employee user = null;
+        String username = "";
+        String password = "";
+        Boolean login = false;
+
         printText("- LOGIN -");
 
-        return null;
+        while (!login){
+
+            System.out.println("Write username : ");
+            //Get username
+            username = Input.checkUsername();
+
+            //find match
+            user = findUser(username);
+
+            System.out.println("Password : ");
+            //Check password
+            password = Input.checkUsername();
+
+            if(user.getPassword().equals(password)) {
+                printText("** login success **");
+                login = true;
+            } else {
+                System.out.println("** Wrong password **");
+            }
+        }
+        return user;
+    }
+
+    public Employee findUser (String username) {
+
+        Employee emp = new Employee();
+
+        //looks through userLogIn to find username match with username string
+        for (String user : MyApp.getUserLogIn().keySet()) {
+            if(username.trim().equals(user)) {
+                emp = MyApp.getEmployee(user);
+            }
+        }
+        return emp;
     }
 
     public void adminMenu() {

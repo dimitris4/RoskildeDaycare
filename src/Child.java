@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Child {
+public class Child extends Person{
 
     private int childID;
     private static int childIDCounter = 1;
@@ -58,5 +58,13 @@ public class Child {
     @Override
     public String toString() {
         return childID + " " + parentID + " " + firstName + " " + lastName + " " +onWaitingList;
+    }
+
+    public void toStringPrint() {
+        System.out.println( "First name        : " + super.getFirstName() +
+                            "\nLast name         : " + super.getLastName() +
+                            "\nParent ID         : " + parentID +
+                            "\nChild ID          : " + childID +
+                            "\nIs on waitinglist : " + onWaitingList );
     }
 }

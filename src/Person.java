@@ -7,9 +7,14 @@ public class Person {
     private String telephone;
 
     // constructor
-    public Person() {
+    public Person(String firstName, String lastName, String telephone) {
         this.personID = personIDCounter++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
     }
+
+    public Person() {}
 
     public int getPersonID() {
         return personID;
@@ -46,5 +51,12 @@ public class Person {
     @Override
     public String toString() {
         return personID + " " + firstName + " " + lastName + " " + telephone;
+    }
+
+    public void toStringPrint() {
+        System.out.println( "First name  : " + firstName +
+                            "\nLast name   : " + lastName +
+                            "\nPhone nr    : " + telephone +
+                            "\nPerson ID   : " + personID );
     }
 }
