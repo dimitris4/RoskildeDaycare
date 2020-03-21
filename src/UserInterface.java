@@ -20,15 +20,19 @@ public class UserInterface {
             //find match
             user = findUser(username);
 
-            System.out.println("Password : ");
-            //Check password
-            password = Input.checkUsername();
-
-            if(user.getPassword().equals(password)) {
-                printText("** login success **");
-                login = true;
+            if (user == null) {
+                System.out.println("** no matching username **");
             } else {
-                System.out.println("** Wrong password **");
+                System.out.println("Password : ");
+                //Check password
+                password = Input.checkUsername();
+
+                if (user.getPassword().equals(password)) {
+                    printText("** login success **");
+                    login = true;
+                } else {
+                    System.out.println("** Wrong password **");
+                }
             }
         }
         return user;
@@ -36,11 +40,11 @@ public class UserInterface {
 
     public Employee findUser (String username) {
 
-        Employee emp = new Employee();
+        Employee emp = null;
 
         //looks through userLogIn to find username match with username string
         for (String user : MyApp.getUserLogIn().keySet()) {
-            if(username.trim().equals(user)) {
+            if (username.trim().equals(user)) {
                 emp = MyApp.getEmployee(user);
             }
         }

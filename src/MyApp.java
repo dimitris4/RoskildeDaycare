@@ -68,7 +68,7 @@ public class MyApp {
     //Getters n Setters
     public static Employee getEmployee (String username) {
 
-        Employee user = new Employee();
+        Employee user = null;
 
         //check if username matches admin usernames
         for (int i = admins.get(0).getEmployeeID()-1; i < admins.size(); i++) {
