@@ -43,7 +43,6 @@ public class MyApp {
         // 4 : ArrayList of Parents
         // 5 : ArrayList of Integers
         // 6 : ArrayList of Integers
-        // 7 : HashMap< String username, String password >
 
         //FOR USE
         /*admins = (ArrayList<Admin>) loadedLists.get(0);
@@ -52,8 +51,7 @@ public class MyApp {
         children = (ArrayList<Child>) loadedLists.get(3);
         parents = (ArrayList<Parent>) loadedLists.get(4);
         telephoneList = (ArrayList<Integer>) loadedLists.get(5);
-        waitingList = (ArrayList<Integer>) loadedLists.get(6);
-        userLogIn = (HashMap<String, String>) loadedLists.get(7);*/
+        waitingList = (ArrayList<Integer>) loadedLists.get(6);*/
 
         //FOR TESTING MAIN ADMIN
         Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "teodor");
