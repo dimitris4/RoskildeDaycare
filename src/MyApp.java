@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MyApp {
 
-    private static Person currentUser = new Employee();
+    private static Employee currentUser = new Employee();
     private static ArrayList<Admin> admins = new ArrayList<>();
     private static ArrayList<Employee> employees = new ArrayList<>();
     private static ArrayList<WorkSchedule> workSchedules = new ArrayList<>();
@@ -11,7 +10,6 @@ public class MyApp {
     private static ArrayList<Parent> parents = new ArrayList<>();
     private static ArrayList<Integer> telephoneList = new ArrayList<>();
     private static ArrayList<Integer> waitingList = new ArrayList<>();
-    private static HashMap<String, String> userLogIn = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -57,21 +55,23 @@ public class MyApp {
         waitingList = (ArrayList<Integer>) loadedLists.get(6);
         userLogIn = (HashMap<String, String>) loadedLists.get(7);*/
 
-        //FOR TESTING
+        //FOR TESTING MAIN ADMIN
         Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "teodor");
         admins.add(testUser);
-        admins.get(0).toStringPrint();
-        admins.get(0).toStringUserInfo();
-        userLogIn.put(testUser.getUsername(), testUser.getPassword());
+
+        Employee test1 = new Employee("mark", "jackson", "23232323", "mark", "mark");
+        employees.add(test1);
     }
 
     //Getters n Setters
+
+    //get an Employee OR Admin object with Username
     public static Employee getEmployee (String username) {
 
         Employee user = null;
 
         //check if username matches admin usernames
-        for (int i = admins.get(0).getEmployeeID()-1; i < admins.size(); i++) {
+        for (int i = 0; i < admins.size(); i++) {
             if (admins.get(i).getUsername().equals(username)) {
                 user = admins.get(i);
             }
@@ -81,7 +81,7 @@ public class MyApp {
         if (user == null) {
 
             //check if username matches employee usernames
-            for (int j = employees.get(0).getEmployeeID()-1; j < employees.size(); j++) {
+            for (int j = 0; j < employees.size(); j++) {
 
                 if (employees.get(j).getUsername().equals(username)) {
                     user = employees.get(j);
@@ -89,18 +89,14 @@ public class MyApp {
             }
         }
 
-        //if no matches where found
-        if (user == null) {
-            System.out.println("** There where no matching usernames. ** ");
-        }
         return user;
     }
 
-    public static Person getCurrentUser() {
+    public static Employee getCurrentUser() {
         return currentUser;
     }
 
-    public static void setCurrentUser(Person currentUser) {
+    public static void setCurrentUser(Employee currentUser) {
         MyApp.currentUser = currentUser;
     }
 
@@ -184,11 +180,4 @@ public class MyApp {
         MyApp.waitingList = waitingList;
     }
 
-    public static HashMap<String, String> getUserLogIn() {
-        return userLogIn;
-    }
-
-    public static void setUserLogIn(HashMap<String, String> userLogIn) {
-        MyApp.userLogIn = userLogIn;
-    }
 }

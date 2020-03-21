@@ -12,43 +12,36 @@ public class UserInterface {
         printText("- LOGIN -");
 
         while (!login){
-
             System.out.println("Write username : ");
             //Get username
             username = Input.checkUsername();
 
-            //find match
-            user = findUser(username);
+            //find match from username : returns null if there was no match
+            //otherwise return Employee object of user.
+            user = MyApp.getEmployee(username);
 
+            //checks to see if there was a user match with username
             if (user == null) {
                 System.out.println("** no matching username **");
             } else {
+
+                //asks for password matching username
                 System.out.println("Password : ");
-                //Check password
                 password = Input.checkUsername();
 
+                //Check password match
                 if (user.getPassword().equals(password)) {
-                    printText("** login success **");
+
+                    //Match found
                     login = true;
                 } else {
+                    //Match not found
                     System.out.println("** Wrong password **");
                 }
             }
         }
+        //return user after username + password match
         return user;
-    }
-
-    public Employee findUser (String username) {
-
-        Employee emp = null;
-
-        //looks through userLogIn to find username match with username string
-        for (String user : MyApp.getUserLogIn().keySet()) {
-            if (username.trim().equals(user)) {
-                emp = MyApp.getEmployee(user);
-            }
-        }
-        return emp;
     }
 
     public void adminMenu() {
@@ -59,6 +52,7 @@ public class UserInterface {
         printText("- EMPLOYEE MENU - ");
     }
 
+    //Just for formatting
     public void printText(String text) {
 
         int startSpace = ( space - text.length() ) / 2;
