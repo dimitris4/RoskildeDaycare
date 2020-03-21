@@ -3,18 +3,20 @@ public class UserInterface {
     private int space = 100;
 
     public Employee logInMenu() {
+        printText("- LOGIN -");
+
         return null;
     }
 
     public void adminMenu() {
-        System.out.println("Another pull / push Test");
+        printText("- ADMIN MENU - ");
     }
 
     public void employeeMenu() {
-
+        printText("- EMPLOYEE MENU - ");
     }
 
-    public void printText(String text, int space) {
+    public void printText(String text) {
 
         int startSpace = ( space - text.length() ) / 2;
         String stripe = "";

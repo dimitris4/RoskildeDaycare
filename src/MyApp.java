@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MyApp {
 
@@ -10,8 +11,10 @@ public class MyApp {
     private static ArrayList<Parent> parents = new ArrayList<>();
     private static ArrayList<Integer> telephoneList = new ArrayList<>();
     private static ArrayList<Integer> waitingList = new ArrayList<>();
+    private static HashMap<String, String> userLogIn = new HashMap<>();
 
     public static void main(String[] args) {
+
 
         //loads the files into MyApp attributes
         loadInfo();
@@ -21,8 +24,10 @@ public class MyApp {
         currentUser = UI.logInMenu();
         if (currentUser instanceof Admin) {
             UI.adminMenu();
+            System.out.println("admin login success");
         } else {
             UI.employeeMenu();
+            System.out.println("employee login success");
         }
 
     }
@@ -40,6 +45,7 @@ public class MyApp {
         // 4 : ArrayList of Parents
         // 5 : ArrayList of Integers
         // 6 : ArrayList of Integers
+        // 7 : HashMap< String username, String password >
         admins = (ArrayList<Admin>) loadedLists.get(0);
         employees = (ArrayList<Employee>) loadedLists.get(1);
         workSchedules = (ArrayList<WorkSchedule>) loadedLists.get(2);
@@ -47,25 +53,24 @@ public class MyApp {
         parents = (ArrayList<Parent>) loadedLists.get(4);
         telephoneList = (ArrayList<Integer>) loadedLists.get(5);
         waitingList = (ArrayList<Integer>) loadedLists.get(6);
+        userLogIn = (HashMap<String, String>) loadedLists.get(7);
     }
 
     //Getters n Setters
-    //returns a list of personIDs for each phone nr
-    public static ArrayList<Integer> getTelephoneList() {
-        return telephoneList;
+    public static Person getCurrentUser() {
+        return currentUser;
     }
 
-
-    public static void setTelephoneList(ArrayList<Integer> telephoneList) {
-        MyApp.telephoneList = telephoneList;
+    public static void setCurrentUser(Person currentUser) {
+        MyApp.currentUser = currentUser;
     }
 
-    public static ArrayList<Integer> getWaitingList() {
-        return waitingList;
+    public static ArrayList<Admin> getAdmin() {
+        return admins;
     }
 
-    public static void setWaitingList(ArrayList<Integer> waitingList) {
-        MyApp.waitingList = waitingList;
+    public static void setAdmin(ArrayList<Admin> admins) {
+        MyApp.admins = admins;
     }
 
     public static ArrayList<Employee> getEmployees() {
@@ -74,6 +79,14 @@ public class MyApp {
 
     public static void setEmployees(ArrayList<Employee> employees) {
         MyApp.employees = employees;
+    }
+
+    public static ArrayList<WorkSchedule> getWorkSchedules() {
+        return workSchedules;
+    }
+
+    public static void setWorkSchedules(ArrayList<WorkSchedule> workSchedules) {
+        MyApp.workSchedules = workSchedules;
     }
 
     public static ArrayList<Child> getChildren() {
@@ -92,19 +105,28 @@ public class MyApp {
         MyApp.parents = parents;
     }
 
-    public static ArrayList<Admin> getAdmin() {
-        return admins;
+    //returns a list of personIDs for each phone nr
+    public static ArrayList<Integer> getTelephoneList() {
+        return telephoneList;
     }
 
-    public static void setAdmin(ArrayList<Admin> admins) {
-        MyApp.admins = admins;
+    public static void setTelephoneList(ArrayList<Integer> telephoneList) {
+        MyApp.telephoneList = telephoneList;
     }
 
-    public static ArrayList<WorkSchedule> getWorkSchedules() {
-        return workSchedules;
+    public static ArrayList<Integer> getWaitingList() {
+        return waitingList;
     }
 
-    public static void setWorkSchedules(ArrayList<WorkSchedule> workSchedules) {
-        MyApp.workSchedules = workSchedules;
+    public static void setWaitingList(ArrayList<Integer> waitingList) {
+        MyApp.waitingList = waitingList;
+    }
+
+    public static HashMap<String, String> getUserLogIn() {
+        return userLogIn;
+    }
+
+    public static void setUserLogIn(HashMap<String, String> userLogIn) {
+        MyApp.userLogIn = userLogIn;
     }
 }
