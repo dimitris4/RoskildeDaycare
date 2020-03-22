@@ -17,23 +17,18 @@ public class UserInterface {
             System.out.print("Username : ");
             //Get username
             username = Input.checkUsername();
-
             //find match from username : returns null if there was no match
             //otherwise return Employee object of user.
             user = MyApp.getEmployee(username);
-
             //checks to see if there was a user match with username
             if (user == null) {
                 System.out.println("** no matching username **");
             } else {
-
                 //asks for password matching username
                 System.out.print("Password : ");
                 password = Input.checkUsername();
-
                 //Check password match
                 if (user.getPassword().equals(password)) {
-
                     //Match found
                     login = true;
                 } else {
@@ -50,12 +45,10 @@ public class UserInterface {
 
         printText("- ADMIN MENU - ");
         System.out.println();
-
-        //Print menu options
+            //Print menu options
         System.out.printf("\t%-20s | %-25s | %-24s | %-20s\n", "> 1. Employees", "> 3. Waiting list", "> 5. Children", "> 0. Exit" );
         System.out.printf("\t%-20s | %-25s | %-24s \n\n", "> 2. Schedules", "> 4. Telephone list", "> 6. Change account" );
-
-        //Select option
+            //Select option
         print();
         System.out.print("Select: ");
         int choice = -1;
@@ -94,33 +87,27 @@ public class UserInterface {
 
     public void employees() {
 
-        //create an ArrayList of all regular employees
+            //create an ArrayList of all regular employees
         ArrayList<Employee> employeeList = MyApp.getEmployees();
-
-        //used to specify what accounts are admin / employee
+            //used to specify what accounts are admin / employee
         int employees = employeeList.size() - 1;
-
-        //add all admins
+            //add all admins
         employeeList.addAll(MyApp.getAdmins());
-
-        //takes the full list of employees + number of employees to determine admins in list
-        //prints all first and last names of employees in correct order
+            //takes the full list of employees + number of employees to determine admins in list
+            //prints all first and last names of employees in correct order
         employeeListPrint(employeeList, employees);
 
-        //
         int choice = -1;
         do {
-            //employee menu
+                //employee menu
             printText("- Employees -");
             System.out.printf("\n\t%-20s | %-25s | %-24s\n",   "> 1. See all info", "> 3. Fire employee", "> 5. Back");
             System.out.printf(  "\t%-20s | %-25s \n\n",        "> 2. Change info",  "> 4. Hire new");
             print();
-
-            //select option
+                //select option
             System.out.print("Select: ");
             choice = Input.checkInt(1, 5);
             print();
-
             switch (choice) {
                 //See all info on employees
                 case 1:
@@ -130,19 +117,16 @@ public class UserInterface {
                             print();
                     }
                     break;
-
                 //Change info of an employee
                 case 2:
-                    //prints all employee names in Employee and Admin groups
+                        //prints all employee names in Employee and Admin groups
                     employeeListPrint(employeeList, employees);
                     print();
-
-                    //Select what employee you want to change from the list with both Employees + Admins
+                        //Select what employee you want to change from the list with both Employees + Admins
                     System.out.print("Select: ");
                     int empSelection = Input.checkInt(0, employeeList.size()-1);
                     print();
-
-                    //Print employee selection to verify it was the right selection
+                        //Print employee selection to verify it was the right selection
                     employeeList.get(empSelection).toStringPrint();
                     print();
                     System.out.print("Correct selection? \n1. yes, 2. no : ");
@@ -151,7 +135,6 @@ public class UserInterface {
                         changeInfo(employeeList.get(empSelection));
                     }
                     break;
-
                 //Fire employee
                 case 3:
                     employeeListPrint(employeeList, employees);
@@ -163,40 +146,35 @@ public class UserInterface {
                     print();
                     System.out.print("Correct selection? \n1. yes, 2. no : ");
                     int check = Input.checkInt(1, 2);
-                    if (check == 1) {
 
+                    if (check == 1) {
                         Employee emp = employeeList.get(empFire);
-                        //checks if employee is admin or reg employee
-                        //Admin removal
+                            //checks if employee is admin or reg employee
+                            //Admin removal
                         if (emp instanceof Admin) {
                             MyApp.removeAdmin( ((Admin) emp).getAdminID() );
                             employees--;
                         }
-                        //Employee removal
-                        else if (emp instanceof Employee){
+                            //Employee removal
+                        else {
                             MyApp.removeEmployee( emp.getEmployeeID() );
                             employees--;
                         }
                     }
                     break;
-
                 //Hire new employee
                 case 4:
 
                     break;
-
                 //back to admin menu / end do while
                 case 5:
                     choice = -1;
             }
-
-
         } while (choice != -1);
     }
 
     public void changeInfo(Employee emp) {
-
-        //create new Employee object to check for differences
+            //create new Employee object to check for differences
         Employee newEmp = emp;
         Boolean infoChanged = false;
 
@@ -211,7 +189,6 @@ public class UserInterface {
             print();
 
             switch (choice) {
-
                 //Change first name
                 case 1:
                     System.out.println("Current name : " + emp.getFirstName());
@@ -224,7 +201,6 @@ public class UserInterface {
                         System.out.println("** First name changed **");
                     }
                     break;
-
                 //Change username
                 case 2:
                     System.out.println("Current username : " + emp.getUsername());
@@ -237,7 +213,6 @@ public class UserInterface {
                         System.out.println("** Username changed **");
                     }
                     break;
-
                 //Change last name
                 case 3:
                     System.out.println("Current last name : " + emp.getLastName());
@@ -250,7 +225,6 @@ public class UserInterface {
                         System.out.println("** Last name changed **");
                     }
                     break;
-
                 //Change password
                 case 4:
                     System.out.println("Current password : ********** ");
@@ -263,7 +237,6 @@ public class UserInterface {
                         System.out.println("** Password changed **");
                     }
                     break;
-
                 //Change phoneNr
                 case 5:
                     System.out.println("Current phoneNr : " + newEmp.getTelephone());
@@ -276,11 +249,10 @@ public class UserInterface {
                         System.out.println("** Telephone nr changed **");
                     }
                     break;
-
+                //Print current Employee info
                 case 6:
                     newEmp.toStringPrint();
                     break;
-
                 //back to admin menu
                 case 7:
                     text("Save changes?");
@@ -342,7 +314,7 @@ public class UserInterface {
         printText("- EMPLOYEE MENU - ");
     }
 
-    //Just for formatting
+    //FORMATTING
     public void printText(String text) {
 
         int startSpace = ( space - text.length() ) / 2;
