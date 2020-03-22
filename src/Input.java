@@ -73,14 +73,14 @@ public class Input {
         while ( !isValid ) {
             isValid = true;
             input = in.nextLine().trim();
-            input.replace(" ", "");
-            if ( (input.length() != 8) || (input.length() != 11) ) {
-                System.out.println("The phone number has to be 'xx xx xx xx'");
+            input.trim().replace(" ", "");
+            if ( (input.length() != 8) ) {
+                System.out.println("The phone number has to be 'xxxxxxxx' numbers only");
                 isValid = false;
                 input = "";
             } else {
                 for ( int i = 0; i < input.length(); i++ ) {
-                    if ( Character.isDigit(input.charAt(i)) ) {
+                    if ( !Character.isDigit(input.charAt(i)) ) {
                         System.out.println("Only numbers, please try again");
                         input = "";
                         isValid = false;

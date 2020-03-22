@@ -1,6 +1,6 @@
 public class Admin extends Employee {
 
-    private static int adminIDCounter = 1;
+    private static int adminIDCounter = 100;
     private int adminID;
 
     // constructor
@@ -27,11 +27,8 @@ public class Admin extends Employee {
     }
 
     public void toStringPrint() {
-        System.out.println( "First name  : " + super.getFirstName() +
-                            "\nLast name   : " + super.getLastName() +
-                            "\nPhone nr    : " + super.getTelephone() +
-                            "\nPerson ID   : " + super.getPersonID() +
-                            "\nEmployee ID : " + super.getEmployeeID() +
-                            "\nAdmin ID    : " + adminID);
+        System.out.printf( "\t %-35s | %-25s | %s \n\t %-35s | %-25s | %s \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Username : " + super.getUsername(), "Phone nr    : " + super.getTelephone(),
+                "Person ID   : " + super.getPersonID(), "Employee ID : " + super.getEmployeeID(), "Admin ID    : " + adminID );
     }
 }

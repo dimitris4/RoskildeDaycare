@@ -67,15 +67,8 @@ public class Employee extends Person {
     }
 
     public void toStringPrint() {
-        System.out.println( "First name  : " + super.getFirstName() +
-                            "\nLast name   : " + super.getLastName() +
-                            "\nPhone nr    : " + super.getTelephone() +
-                            "\nPerson ID   : " + super.getPersonID() +
-                            "\nEmployee ID : " + employeeID);
-    }
-
-    public void toStringUserInfo() {
-        System.out.println(  "Username : " + username +
-                           "\nPassword : " + password);
+        System.out.printf( "\t %-35s | %-25s | %s \n\t %-35s | %s \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Username : " + username, "Phone nr    : " + super.getTelephone(),
+                "Person ID   : " + super.getPersonID(), "Employee ID : " + employeeID );
     }
 }
