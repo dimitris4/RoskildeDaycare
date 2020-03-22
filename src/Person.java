@@ -1,6 +1,6 @@
 public class Person {
 
-    private static int personIDCounter = 1;
+    private static int personIDCounter = 0;
     private int personID;
     private String firstName;
     private String lastName;
@@ -14,7 +14,14 @@ public class Person {
         this.telephone = telephone;
     }
 
-    public Person() {}
+    public Person(int personID){
+        this.personID = personID;
+        personIDCounter++;
+    }
+
+    public Person() {
+        this.personID = personIDCounter++;
+    }
 
     public int getPersonID() {
         return personID;

@@ -1,7 +1,7 @@
 public class Employee extends Person {
 
     private int employeeID;
-    private static int employeeIDCounter = 1;
+    private static int employeeIDCounter = 0;
     private int workScheduleID = -1; // set -1 by default until the given employee is assigned a work schedule
     private String username;
     private String password;
@@ -11,12 +11,24 @@ public class Employee extends Person {
     public Employee(String firstName, String lastName, String telephone, String username, String password) {
         super(firstName, lastName, telephone);
         this.employeeID = employeeIDCounter++;
+        super.setPersonID(super.getPersonID());
+        this.accessLevel = 1;
         this.username = username;
         this.password = password;
+    }
+
+    public Employee (int employeeID) {
+        this.employeeID = employeeID;
+        employeeIDCounter++;
+        super.setPersonID(super.getPersonID());
         this.accessLevel = 1;
     }
 
-    public Employee () {}
+    public Employee () {
+        this.employeeID = employeeIDCounter++;
+        super.setPersonID(super.getPersonID());
+        this.accessLevel = 1;
+    }
 
     //Getters and setters
     public int getEmployeeID() {
@@ -67,8 +79,12 @@ public class Employee extends Person {
     }
 
     public void toStringPrint() {
-        System.out.printf( "\t %-35s | %-25s | %s \n\t %-35s | %s \n",
-                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Username : " + username, "Phone nr    : " + super.getTelephone(),
+        System.out.printf( "\t %-35s | %-30s | %s \n\t %-35s | %s \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Username    : " + username, "Phone nr    : " + super.getTelephone(),
                 "Person ID   : " + super.getPersonID(), "Employee ID : " + employeeID );
+    }
+    public void toStringSimplePrint() {
+        System.out.printf( "\t %-35s | %-30s | %s \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Username    : " + username, "Phone nr    : " + super.getTelephone());
     }
 }

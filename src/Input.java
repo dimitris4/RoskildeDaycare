@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Input {
+class Input {
 
     private static Scanner in = new Scanner(System.in);
 
@@ -12,7 +12,7 @@ public class Input {
         while ( !isValid ) {
             isValid = true;
             input = in.nextLine().trim();
-            if ( input.length() > 10 ) {
+            if ( input.length() > 15 ) {
                 System.out.println("Too long, please try again");
                 isValid = false;
                 input = "";
@@ -24,9 +24,6 @@ public class Input {
                 System.out.println("Write one word, please try again");
                 isValid = false;
                 input = "";
-            }
-            if ( !input.isEmpty() ) {
-                isValid = true;
             }
         }
         return input;
@@ -40,7 +37,7 @@ public class Input {
         while ( !isValid ) {
             isValid = true;
             input = in.nextLine().trim();
-            if ( input.length() > 10 ) {
+            if ( input.length() > 15 ) {
                 System.out.println("Too long, please try again");
                 isValid = false;
                 input = "";
@@ -57,9 +54,6 @@ public class Input {
                         in.next();
                     }
                 }
-                if ( !input.isEmpty() ) {
-                    isValid = true;
-                }
             }
         }
         return input;
@@ -72,8 +66,8 @@ public class Input {
 
         while ( !isValid ) {
             isValid = true;
-            input = in.nextLine().trim();
-            input.trim().replace(" ", "");
+            input = in.nextLine();
+            input.replace(" ", "");
             if ( (input.length() != 8) ) {
                 System.out.println("The phone number has to be 'xxxxxxxx' numbers only");
                 isValid = false;
@@ -86,9 +80,6 @@ public class Input {
                         isValid = false;
                         in.next();
                     }
-                }
-                if ( !input.isEmpty() ) {
-                    isValid = true;
                 }
             }
         }

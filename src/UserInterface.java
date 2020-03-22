@@ -1,15 +1,21 @@
 import java.util.ArrayList;
 
-public class UserInterface {
+class UserInterface {
 
     private int space = 110;
+    private ArrayList<Employee> emp = MyApp.getEmployees();
+    private ArrayList<Admin> adm = MyApp.getAdmins();
 
-    public Employee logInMenu() {
+    private int empSize = emp.size();
+    private int admSize = adm.size();
+    private int sumSize = empSize + admSize;
+
+    Employee logInMenu() {
 
         Employee user = null;
         String username = "";
         String password = "";
-        Boolean login = false;
+        boolean login = false;
 
         printText("- LOGIN -");
 
@@ -41,18 +47,18 @@ public class UserInterface {
         return user;
     }
 
-    public void adminMenu() {
+    void adminMenu() {
 
-        printText("- ADMIN MENU - ");
-        System.out.println();
-            //Print menu options
-        System.out.printf("\t%-20s | %-25s | %-24s | %-20s\n", "> 1. Employees", "> 3. Waiting list", "> 5. Children", "> 0. Exit" );
-        System.out.printf("\t%-20s | %-25s | %-24s \n\n", "> 2. Schedules", "> 4. Telephone list", "> 6. Change account" );
-            //Select option
-        print();
-        System.out.print("Select: ");
         int choice = -1;
         do {
+            //Print menu options
+            printText("- ADMIN MENU - ");
+            System.out.println();
+            System.out.printf("\t%-20s | %-25s | %-24s | %-20s\n", "> 1. Employees", "> 3. Waiting list", "> 5. Children", "> 0. Exit" );
+            System.out.printf("\t%-20s | %-25s | %-24s \n\n", "> 2. Schedules", "> 4. Telephone list", "> 6. Change account" );
+            //Select option
+            print();
+            System.out.print("Select: ");
             choice = Input.checkInt(0, 7);
             switch (choice) {
                 case 0:
@@ -85,17 +91,10 @@ public class UserInterface {
         } while (choice != -1);
     }
 
-    public void employees() {
+    private void employees() {
 
-            //create an ArrayList of all regular employees
-        ArrayList<Employee> employeeList = MyApp.getEmployees();
-            //used to specify what accounts are admin / employee
-        int employees = employeeList.size() - 1;
-            //add all admins
-        employeeList.addAll(MyApp.getAdmins());
-            //takes the full list of employees + number of employees to determine admins in list
-            //prints all first and last names of employees in correct order
-        employeeListPrint(employeeList, employees);
+        //prints all first and last names of employees in correct order
+        employeeListPrint();
 
         int choice = -1;
         do {
@@ -111,60 +110,55 @@ public class UserInterface {
             switch (choice) {
                 //See all info on employees
                 case 1:
-                    for (int a = 0; a < employeeList.size(); a++) {
-                        employeeList.get(a).toStringPrint();
-                        if (a < employeeList.size()-1)
+                    for (int a = 0; a < empSize; a++) {
+                        emp.get(a).toStringPrint();
+                        print();
+                    }
+                    for (int b = 0; b < admSize; b++) {
+                        adm.get(b).toStringPrint();
+                        if (b < admSize-1)
                             print();
                     }
                     break;
                 //Change info of an employee
                 case 2:
-                        //prints all employee names in Employee and Admin groups
-                    employeeListPrint(employeeList, employees);
+                    //prints all employee names in Employee and Admin groups
+                    employeeListPrint();
                     print();
-                        //Select what employee you want to change from the list with both Employees + Admins
+
+                    //Select what employee you want to change from the list with both Employees + Admins
                     System.out.print("Select: ");
-                    int empSelection = Input.checkInt(0, employeeList.size()-1);
+                    int empSelection = Input.checkInt(0, sumSize-1);
                     print();
+
+                    boolean type = false;
+                    //Regular employee
+                    if (empSelection > empSize) {
                         //Print employee selection to verify it was the right selection
-                    employeeList.get(empSelection).toStringPrint();
+                        emp.get(empSelection).toStringPrint();
+                    }
+                    //Admin employee
+                    else {
+                        adm.get(empSelection - empSize).toStringPrint();
+                        type = true;
+                    }
+
                     print();
                     System.out.print("Correct selection? \n1. yes, 2. no : ");
                     int assurance = Input.checkInt(1, 2);
-                    if (assurance == 1) {
-                        changeInfo(employeeList.get(empSelection));
+                    if (assurance == 1 && !type) {
+                        changeInfo(emp.get(empSelection));
+                    } else {
+                        changeInfo(adm.get(empSelection - empSize));
                     }
                     break;
                 //Fire employee
                 case 3:
-                    employeeListPrint(employeeList, employees);
-                    print();
-                    System.out.print("Select: ");
-                    int empFire = Input.checkInt(0, employeeList.size()-1);
-                    print();
-                    employeeList.get(empFire).toStringPrint();
-                    print();
-                    System.out.print("Correct selection? \n1. yes, 2. no : ");
-                    int check = Input.checkInt(1, 2);
-
-                    if (check == 1) {
-                        Employee emp = employeeList.get(empFire);
-                            //checks if employee is admin or reg employee
-                            //Admin removal
-                        if (emp instanceof Admin) {
-                            MyApp.removeAdmin( ((Admin) emp).getAdminID() );
-                            employees--;
-                        }
-                            //Employee removal
-                        else {
-                            MyApp.removeEmployee( emp.getEmployeeID() );
-                            employees--;
-                        }
-                    }
+                    fireEmployee();
                     break;
                 //Hire new employee
                 case 4:
-
+                    hireEmployee();
                     break;
                 //back to admin menu / end do while
                 case 5:
@@ -173,13 +167,132 @@ public class UserInterface {
         } while (choice != -1);
     }
 
-    public void changeInfo(Employee emp) {
+    private Boolean fireEmployee() {
+
+        Employee employeeFired = null;
+        boolean empRemoved = false;
+        employeeListPrint();
+        print();
+        System.out.print("Select: ");
+        int empFire = Input.checkInt(0, sumSize-1);
+        print();
+        if (empFire < empSize) {
+            employeeFired = emp.get(empFire);
+            employeeFired.toStringPrint();
+        } else {
+            employeeFired = adm.get(empFire - empSize);
+            employeeFired.toStringPrint();
+        }
+        print();
+        System.out.print("Correct selection? \n1. yes, 2. no : ");
+        int check = Input.checkInt(1, 2);
+
+        if (check == 1) {
+            //checks if employee is admin or reg employee
+            //Admin removal
+            if (employeeFired instanceof Admin) {
+                MyApp.removeAdmin( ((Admin) employeeFired).getAdminID() );
+            }
+            //Employee removal
+            else {
+                MyApp.removeEmployee( employeeFired.getEmployeeID() );
+            }
+            empRemoved = true;
+            updateEmpList();
+        }
+        return empRemoved;
+    }
+
+    private void hireEmployee() {
+
+        Employee newEmp = new Employee();
+        boolean check = false;
+
+        printText("- Hire new employee - ");
+        System.out.println("\tWhat type of employee are you creating?");
+        System.out.printf("\n\t%-20s | %s", "> 1. Regular Employee", "> 2. Administartor \n\n");
+        print();
+        System.out.print("Select: ");
+        int select = Input.checkInt(1, 2);
+            //only occurs if user selects administrator, otherwise newEmp remains an Employee object
+        if (select==2) {
+            newEmp = new Admin(MyApp.getAdminID()+1);
+            MyApp.setAdminID(MyApp.getAdminID()+1);
+            text(" - Administrator - ");
+        } else {
+            text(" - Employee - ");
+        }
+
+        //Get first name
+        System.out.print("First name       : ");
+        String firstName = Input.checkName();
+        newEmp.setFirstName(firstName);
+
+        //Get last name
+        System.out.print("Last name        : ");
+        String lastName = Input.checkName();
+        newEmp.setLastName(lastName);
+
+        //Get PhoneNr
+        System.out.print("Phone nr         : ");
+        String phoneNr = Input.checkPhoneNr();
+        newEmp.setTelephone(phoneNr);
+
+        //Get Username
+        System.out.print("Username         : ");
+        String username = Input.checkUsername();
+        newEmp.setUsername(username);
+
+        //Get password
+        String pass1 = "";
+        String pass2 = "";
+        int checkNr = 2;
+        do {
+            System.out.print("Create password  : ");
+            pass1 = Input.checkUsername();
+            System.out.print("Verify password  : ");
+            pass2 = Input.checkUsername();
+            if ( !pass1.equals(pass2) ) {
+                System.out.println("** Passwords didnt match **");
+            } else {
+                newEmp.setPassword(pass1);
+            }
+        } while ( !pass1.equals(pass2) && checkNr == 1 );
+
+        //All info recieved
+        //Print info to and ask to save
+        print();
+        newEmp.toStringPrint();
+        print();
+        System.out.print("Save profile?\n1. yes, 2. no    : ");
+        checkNr = Input.checkInt(1, 2);
+        if (checkNr == 1) {
+
+            //Add new employee to MyApp and update UI employee lists
+            if (newEmp instanceof Admin) {
+                MyApp.addAdmin( (Admin) newEmp);
+            } else {
+                MyApp.addEmployee(newEmp);
+            }
+            updateEmpList();
+        }
+    }
+
+    private void updateEmpList() {
+        emp = MyApp.getEmployees();
+        adm = MyApp.getAdmins();
+        empSize = emp.size();
+        admSize = adm.size();
+        sumSize = empSize + admSize;
+    }
+
+    private void changeInfo(Employee emp) {
             //create new Employee object to check for differences
-        Employee newEmp = emp;
-        Boolean infoChanged = false;
+        boolean infoChanged = false;
 
         while ( !infoChanged ) {
-            print();
+
+            printText("- Change info -");
             System.out.println("\tWhat would you like to change? ");
             System.out.printf("\n\t%-20s | %-25s | %-24s | %-20s\n", "> 1. First name", "> 3. Last Name", "> 5. Phone number", "> 7. Back");
             System.out.printf("\t%-20s | %-25s | %-24s\n", "> 2. Username", "> 4. Password", "> 6. See info");
@@ -191,25 +304,25 @@ public class UserInterface {
             switch (choice) {
                 //Change first name
                 case 1:
-                    System.out.println("Current name : " + emp.getFirstName());
-                    System.out.print("New name     : ");
+                    System.out.println("Current name   : " + emp.getFirstName());
+                    System.out.print("New name         : ");
                     String newName = Input.checkName();
-                    System.out.print("Correct name: " + newName + "?\n1. yes, 2. no : ");
+                    System.out.print("Correct name     : " + newName + "?\n1. yes, 2. no    : ");
                     int assurance = Input.checkInt(1, 2);
                     if (assurance == 1) {
-                        newEmp.setFirstName(newName);
+                        emp.setFirstName(newName);
                         System.out.println("** First name changed **");
                     }
                     break;
                 //Change username
                 case 2:
-                    System.out.println("Current username : " + emp.getUsername());
-                    System.out.print("New username     : ");
+                    System.out.println("Current username  : " + emp.getUsername());
+                    System.out.print(  "New username      : ");
                     String newUsername = Input.checkName();
-                    System.out.print("new username : " + newUsername + "?\n1. yes, 2. no : ");
+                    System.out.print(  "new username      : " + newUsername + "?\n1. yes, 2. no     : ");
                     assurance = Input.checkInt(1, 2);
                     if (assurance == 1) {
-                        newEmp.setUsername(newUsername);
+                        emp.setUsername(newUsername);
                         System.out.println("** Username changed **");
                     }
                     break;
@@ -218,60 +331,60 @@ public class UserInterface {
                     System.out.println("Current last name : " + emp.getLastName());
                     System.out.print(  "New last name     : ");
                     String newLastName = Input.checkName();
-                    System.out.print("New last name : " + newLastName + "?\n1. yes, 2. no : ");
+                    System.out.print("New last name : " + newLastName + "?\n1. yes, 2. no     : ");
                     assurance = Input.checkInt(1, 2);
                     if (assurance == 1) {
-                        newEmp.setLastName(newLastName);
+                        emp.setLastName(newLastName);
                         System.out.println("** Last name changed **");
                     }
                     break;
                 //Change password
                 case 4:
-                    System.out.println("Current password : ********** ");
-                    System.out.print(  "New password     : ");
-                    String newPassword = Input.checkName();
-                    System.out.print("New password : " + newPassword + "?\n1. yes, 2. no : ");
+                    System.out.println("Current password  : ********** ");
+                    System.out.print(  "New password      : ");
+                    String newPassword = Input.checkUsername();
+                    System.out.print("New password : " + newPassword + "?\n1. yes, 2. no     : ");
                     assurance = Input.checkInt(1, 2);
                     if (assurance == 1) {
-                        newEmp.setPassword(newPassword);
+                        emp.setPassword(newPassword);
                         System.out.println("** Password changed **");
                     }
                     break;
                 //Change phoneNr
                 case 5:
-                    System.out.println("Current phoneNr : " + newEmp.getTelephone());
-                    System.out.print(  "New phoneNr     : ");
+                    System.out.println("Current phoneNr   : " + emp.getTelephone());
+                    System.out.print(  "New phoneNr       : ");
                     String newTelephone = Input.checkPhoneNr();
-                    System.out.print("New phoneNR : " + newTelephone + "?\n1. yes, 2. no : ");
+                    System.out.print("New phoneNR : " + newTelephone + "?\n1. yes, 2. no     : ");
                     assurance = Input.checkInt(1, 2);
                     if (assurance == 1) {
-                        newEmp.setTelephone(newTelephone);
+                        emp.setTelephone(newTelephone);
                         System.out.println("** Telephone nr changed **");
                     }
                     break;
                 //Print current Employee info
                 case 6:
-                    newEmp.toStringPrint();
+                    emp.toStringPrint();
                     break;
                 //back to admin menu
                 case 7:
                     text("Save changes?");
                     print();
                     //Print new employee info
-                    newEmp.toStringPrint();
+                    emp.toStringPrint();
                     print();
-                    System.out.print("Updated Employee info?\n1. yes, 2. no : ");
+                    System.out.print("Updated Employee info?\n1. yes, 2. no     : ");
                     int save = Input.checkInt(1, 2);
                     //only saves if user approves
                     if (save == 1) {
                         //checks if employee is admin or reg employee
                         //Admin removal
                         if (emp instanceof Admin) {
-                            MyApp.setAdmin((Admin) newEmp, ((Admin) emp).getAdminID());
+                            MyApp.setAdmin((Admin) emp, ((Admin) emp).getAdminID());
                         }
                         //Employee removal
                         else {
-                            MyApp.setEmployee(newEmp, emp.getEmployeeID());
+                            MyApp.setEmployee(emp, emp.getEmployeeID());
                         }
                     }
                     infoChanged = true;
@@ -279,43 +392,41 @@ public class UserInterface {
         }
     }
 
-    public void employeeListPrint(ArrayList<Employee> employeeList, int employees ){
+    private void employeeListPrint(){
+
         //display full employee list
         text(" - Employee list -");
-        for (int i = 0; i < employeeList.size(); i++) {
-            System.out.println("\t> " + i + ". " + employeeList.get(i).getFirstName() + " " + employeeList.get(i).getLastName());
-            if (i == employees) {
-                text(" - Admins -");
-            }
+        for (int i = 0; i < empSize; i++) {
+            System.out.println("\t> " + i + ". " + emp.get(i).getFirstName() + " " + emp.get(i).getLastName());
+        }
+        text(" - Admins -");
+        for (int i = empSize; i < admSize + empSize; i++) {
+            System.out.println("\t> " + i + ". " + adm.get(i-empSize).getFirstName() + " " + adm.get(i-empSize).getLastName());
         }
     }
 
-    public void schedules() {
+    private void schedules() {
 
     }
 
-    public void waitingList() {
+    private void waitingList() {
 
     }
 
-    public void telephoneList() {
+    private void telephoneList() {
 
     }
 
-    public void children() {
+    private void children() {
 
     }
 
-    public void updateAccount() {
-
-    }
-
-    public void employeeMenu() {
+    void employeeMenu() {
         printText("- EMPLOYEE MENU - ");
     }
 
-    //FORMATTING
-    public void printText(String text) {
+    //FORMATTING  -- ONLY USED WITHIN THE CLASS --
+    private void printText(String text) {
 
         int startSpace = ( space - text.length() ) / 2;
         String stripe = "";
@@ -329,7 +440,7 @@ public class UserInterface {
         System.out.println( stripe + "\n" + startSpaceString + text + "\n" + stripe );
     }
 
-    public void text(String text) {
+    private void text(String text) {
 
         int startSpace = ( space - text.length() ) / 2;
         String startSpaceString = "";
@@ -339,7 +450,7 @@ public class UserInterface {
         System.out.println(startSpaceString + text);
     }
 
-    public void print() {
+    private void print() {
 
         String stripe = "";
         for (int i = 0; i < space; i++) {

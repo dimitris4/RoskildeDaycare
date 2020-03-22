@@ -15,6 +15,11 @@ public class MyApp {
     private static ArrayList<Integer> telephoneList = new ArrayList<>();
     private static ArrayList<Integer> waitingList = new ArrayList<>();
 
+    //ID counts
+    private static int personID = 4;
+    private static int employeeID = 4;
+    private static int adminID = 100;
+
     // START OF PROGRAM
     public static void main(String[] args) {
 
@@ -33,7 +38,7 @@ public class MyApp {
         //Selects menu based on acceslevel
         if (currentUser.getAccessLevel() == 2) {
             UI.adminMenu();
-        } else if ( currentUser.getAccessLevel() == 1 ){
+        } else {
             UI.employeeMenu();
         }
     }
@@ -43,13 +48,14 @@ public class MyApp {
 
         ArrayList<Object> loadedLists = FM.readFromFiles();
         // needs to read an ArrayList of Objects in the CORRECT order
-        // 0 : Admin user
+        // 0 : ArrayList of Admins
         // 1 : ArrayList of Employees
         // 2 : ArrayList of Workschedules
         // 3 : ArrayList of Children
         // 4 : ArrayList of Parents
         // 5 : ArrayList of Integers
         // 6 : ArrayList of Integers
+        // 7 : Integer for People count
 
         //FOR USE
         /*admins = (ArrayList<Admin>) loadedLists.get(0);
@@ -58,7 +64,13 @@ public class MyApp {
         children = (ArrayList<Child>) loadedLists.get(3);
         parents = (ArrayList<Parent>) loadedLists.get(4);
         telephoneList = (ArrayList<Integer>) loadedLists.get(5);
-        waitingList = (ArrayList<Integer>) loadedLists.get(6);*/
+        waitingList = (ArrayList<Integer>) loadedLists.get(6);
+
+        //FOR ID COUNTS
+        adminID = admins.get(admins.size()-1).getAdminID();
+        employeeID = employees.get(employees.size()).getEmployeeID();
+        personID = loadedLists.get(7);
+        */
 
         //FOR TESTING MAIN ADMIN
         Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "jonasson");
@@ -95,7 +107,7 @@ public class MyApp {
     public static void removeAdmin(int adminID) {
 
         //Verification that action went through
-        Boolean check = false;
+        boolean check = false;
 
         //Loop thorugh full admin list to find match
         for (int i = 0; i < admins.size(); i++ ) {
@@ -104,6 +116,7 @@ public class MyApp {
             if (admins.get(i).getAdminID() == adminID) {
                 admins.remove(i);
                 System.out.println("** Admin removed **");
+                check = true;
             }
         }
         //informs if action failed
@@ -116,7 +129,7 @@ public class MyApp {
     public static void removeEmployee(int employeeID) {
 
         //Verification that action went through
-        Boolean check = false;
+        boolean check = false;
 
         //Loop thorugh full admin list to find match
         for (int i = 0; i < employees.size(); i++ ) {
@@ -124,16 +137,42 @@ public class MyApp {
             //Removes admin when adminID match is found
             if (employees.get(i).getEmployeeID() == employeeID) {
                 employees.remove(i);
-                System.out.println("** Admin removed **");
+                System.out.println("** Employee removed **");
+                check = true;
             }
         }
         //informs if action failed
-        if (check) {
-            System.out.println("** Admin not found (not removed) **");
+        if (!check) {
+            System.out.println("** Employee not found (not removed) **");
         }
     }
 
     //GETTERS AND SETTERS
+
+    public static int getPersonID() {
+        return personID;
+    }
+
+    public static void setPersonID(int personID) {
+        MyApp.personID = personID;
+    }
+
+    public static int getEmployeeID() {
+        return employeeID;
+    }
+
+    public static void setEmployeeID(int employeeID) {
+        MyApp.employeeID = employeeID;
+    }
+
+    public static int getAdminID() {
+        return adminID;
+    }
+
+    public static void setAdminID(int adminID) {
+        MyApp.adminID = adminID;
+    }
+
     //get an Employee OR Admin object from Username
     public static Employee getEmployee (String username) {
 
@@ -148,7 +187,6 @@ public class MyApp {
         if (user == null) {
             //check if username matches employee usernames
             for (int j = 0; j < employees.size(); j++) {
-
                 if (employees.get(j).getUsername().equals(username)) {
                     user = employees.get(j);
                 }
@@ -163,6 +201,18 @@ public class MyApp {
 
     public static void setCurrentUser(Employee currentUser) {
         MyApp.currentUser = currentUser;
+    }
+
+    //Add Employee to list
+    public static void addEmployee(Employee emp) {
+        employees.add(emp);
+        System.out.println("** Employee added to system **");
+    }
+
+    //Add Admin to list
+    public static void addAdmin(Admin adm) {
+        admins.add(adm);
+        System.out.println("** Admin added to system **");
     }
 
     //Returns full Admin list
@@ -194,7 +244,7 @@ public class MyApp {
 
     //Set 1 Admin object depending on adminID
     public static void setAdmin(Admin admin, int adminID) {
-        Boolean check = false;
+        boolean check = false;
         for (int i = 0; i < admins.size(); i++ ) {
             if (admins.get(i).getAdminID() == adminID) {
                 admins.set(i, admin);
@@ -236,7 +286,7 @@ public class MyApp {
 
     //Set 1 Employee object depending on employeeID
     public static void setEmployee(Employee employee, int employeeID) {
-        Boolean check = false;
+        boolean check = false;
         for (int i = 0; i < employees.size(); i++ ) {
             if (employees.get(i).getEmployeeID() == employeeID) {
                 employees.set(i, employee);
