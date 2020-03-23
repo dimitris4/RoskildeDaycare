@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 class UserInterface {
 
+    //TEST
     private int space = 110;
     private ArrayList<Employee> emp = MyApp.getEmployees();
     private ArrayList<Admin> adm = MyApp.getAdmins();
