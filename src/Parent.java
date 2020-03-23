@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Parent extends Person {
+
     private int parentID;
     private static int parentIDCounter = 0;
 

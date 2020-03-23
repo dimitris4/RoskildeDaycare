@@ -1,0 +1,6 @@
+# IntelliJ User files
+.idea/
+*.iml
+
+# Class files
+*.class
