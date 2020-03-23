@@ -72,9 +72,25 @@ public class MyApp {
         personID = loadedLists.get(7);
         */
 
+
+
         //FOR TESTING MAIN ADMIN
         Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "jonasson");
         admins.add(testUser);
+
+        Parent testParent1 = new Parent("mother", "mom", "11111111");
+        parents.add(testParent1);
+        Parent testParent2 = new Parent("father", "dad", "22222222");
+        parents.add(testParent2);
+        Parent testParent3 = new Parent("moose", "max", "33333333");
+        parents.add(testParent3);
+
+        Child testChild1 = new Child("child", "lack", testParent1.getParentID());
+        children.add(testChild1);
+        Child testChild2 = new Child("what", "luck", testParent2.getParentID());
+        children.add(testChild2);
+        Child testChild3 = new Child("ever", "laack", testParent3.getParentID());
+        children.add(testChild3);
 
         Employee test1 = new Employee("mark", "jackson", "23232323", "mark", "jackson");
         employees.add(test1);

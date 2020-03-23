@@ -133,7 +133,7 @@ class UserInterface {
 
                     boolean type = false;
                     //Regular employee
-                    if (empSelection > empSize) {
+                    if (empSelection < empSize) {
                         //Print employee selection to verify it was the right selection
                         emp.get(empSelection).toStringPrint();
                     }
