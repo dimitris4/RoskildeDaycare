@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Child extends Person{
@@ -10,9 +11,26 @@ public class Child extends Person{
     private boolean onWaitingList;
 
     // constructor
-    public Child(int parentID) {
+    public Child(String firstName, String lastName, int parentID) {
+        super(firstName, lastName, null);
         this.childID = childIDCounter++;
+        this.setPersonID(super.getPersonID());
         this.parentID = parentID;
+    }
+
+    public void addChildFromConsole(){
+        String tempFirstName;
+        String tempLastName;
+        int tempParentID;
+
+        //get first name
+        System.out.println("First Name : ");
+        tempFirstName = Input.checkName();
+
+        //get last name
+        System.out.println("Last Name : ");
+        tempLastName = Input.checkName();
+
     }
 
     public int getChildID() {
@@ -66,5 +84,10 @@ public class Child extends Person{
                             "\nParent ID         : " + parentID +
                             "\nChild ID          : " + childID +
                             "\nIs on waitinglist : " + onWaitingList );
+    }
+
+    public void toStringSimpleChild(){
+        System.out.printf( "\t %-35s | %-30s | \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Parent ID    : " + parentID);
     }
 }

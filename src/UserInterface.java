@@ -1,5 +1,5 @@
+import java.net.MalformedURLException;
 import java.util.ArrayList;
-// Hello world
 
 class UserInterface {
 
@@ -134,7 +134,7 @@ class UserInterface {
 
                     boolean type = false;
                     //Regular employee
-                    if (empSelection > empSize) {
+                    if (empSelection < empSize) {
                         //Print employee selection to verify it was the right selection
                         emp.get(empSelection).toStringPrint();
                     }
@@ -411,11 +411,72 @@ class UserInterface {
     }
 
     private void waitingList() {
+        int choice = -1;
+
+        do{
+            //print menu options
+            printText("- WAITING LIST MENU - ");
+            System.out.println();
+            System.out.printf("\t%-20s | %-25s | %-24s \n", "> 1. See list", "> 3. Remove child", "> 0. Exit" );
+            System.out.printf("\t%-20s \n\n", "> 2. Add child");
+
+            //select option
+            print();
+            System.out.println("Select: ");
+            choice = Input.checkInt(0, 3);
+
+            switch (choice){
+                case 0:
+                    choice = -1;
+                    break;
+                    //go back to the main menu
+                case 1:
+                    printText("- WAITING LIST - ");
+                    for(int i = 0; i < MyApp.getChildren().size(); i++){
+                        if (MyApp.getChildren().get(i).isOnWaitingList()) {
+                            MyApp.getChildren().get(i).toStringSimpleChild();
+                        }
+                    }
+                    break;
+                case 2:
+                    printText("- ADD CHILD - ");
+
+            }
+        } while (choice != -1);
 
     }
 
     private void telephoneList() {
+        int choice = -1;
+        do {
+            //Print menu options
+            printText("- TELEPHONE LISTS - ");
+            System.out.printf("\t%-20s | %-25s \n", "> 1. Employees", "> 0. Exit" );
+            System.out.printf("\t%-20s | \n\n", "> 2. Parents" );
+            //select option
+            print();
+            System.out.println("Select: ");
+            choice = Input.checkInt(0, 2);
 
+            switch (choice) {
+                case 0:
+                    choice = -1;
+                    break;
+                case 1:
+                    for(int i = 0; i < empSize; i++){
+                        emp.get(i).toStringSimplePrintPerson();
+                        print();
+                    }
+                    break;
+                case 2:
+                    for(int i = 0; i < MyApp.getParents().size(); i++ ){
+                        MyApp.getParents().get(i).toStringSimplePrintPerson();
+                        print();
+                    }
+
+                default:
+            }
+        } while( choice != -1);
     }
 
     private void children() {
@@ -423,7 +484,42 @@ class UserInterface {
     }
 
     void employeeMenu() {
-        printText("- EMPLOYEE MENU - ");
+        int choice = -1;
+
+        do{
+            //print menu options
+            printText("- EMPLOYEE MENU - ");
+            System.out.println();
+            System.out.printf("\t%-20s | %-25s | %-24s \n", "> 1. Telephone List", "> 3. Children", "> 0. Exit" );
+            System.out.printf("\t%-20s | %-25s \n\n", "> 2. Waiting List", "> 4. Change account" );
+            //select option
+            print();
+            System.out.println("Select: ");
+            choice = Input.checkInt(0, 4);
+            switch (choice) {
+                case 0:
+                    MyApp.exit();
+                    printText("- EXIT PROGRAM -");
+                    choice = -1;
+                    break;
+                case 1:
+                    telephoneList();
+                    break;
+                case 2:
+                    waitingList();
+                    break;
+                case 3:
+                    children();
+                    break;
+                case 4:
+                    choice = -1;
+                    MyApp.login();
+                    break;
+                default:
+
+            }
+
+        } while ( choice != -1);
     }
 
     //FORMATTING  -- ONLY USED WITHIN THE CLASS --
