@@ -15,8 +15,7 @@ public class FileManagement {
         // 2 : ArrayList of Workschedules
         // 3 : ArrayList of Children
         // 4 : ArrayList of Parents
-        // 5 : ArrayList of Integers
-        // 7 : Integer for People count
+        // 5 : Integer for People count
 
         //Scanners for each file
         Scanner admins = new Scanner("");
