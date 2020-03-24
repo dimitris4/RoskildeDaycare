@@ -18,19 +18,7 @@ public class Child extends Person{
         this.parentID = parentID;
     }
 
-    public void addChildFromConsole(){
-        String tempFirstName;
-        String tempLastName;
-        int tempParentID;
-
-        //get first name
-        System.out.println("First Name : ");
-        tempFirstName = Input.checkName();
-
-        //get last name
-        System.out.println("Last Name : ");
-        tempLastName = Input.checkName();
-
+    public Child() {
     }
 
     public int getChildID() {
@@ -87,7 +75,8 @@ public class Child extends Person{
     }
 
     public void toStringSimpleChild(){
-        System.out.printf( "\t %-35s | %-30s | \n",
-                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Parent ID    : " + parentID);
+        System.out.printf("\t%-35s | %-30s | %-35s \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Child ID    : " + childID , "Parent ID    : " + parentID);
     }
+
 }

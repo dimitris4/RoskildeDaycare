@@ -28,4 +28,9 @@ public class Parent extends Person {
     public String toString() {
         return parentID + " " + getPersonID();
     }
+
+    public void toStringSimplePrintParent(){
+        System.out.printf( "\t %-35s | %-30s | \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Parent ID    : " + getParentID());
+    }
 }

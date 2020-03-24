@@ -1,3 +1,4 @@
+import javax.crypto.Cipher;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -61,6 +62,7 @@ class UserInterface {
             print();
             System.out.print("Select: ");
             choice = Input.checkInt(0, 7);
+            print();
             switch (choice) {
                 case 0:
                     MyApp.exit();
@@ -412,17 +414,19 @@ class UserInterface {
 
     private void waitingList() {
         int choice = -1;
+        int choice2 = -1;
+        int tempParentID = 0;
 
         do{
             //print menu options
             printText("- WAITING LIST MENU - ");
             System.out.println();
-            System.out.printf("\t%-20s | %-25s | %-24s \n", "> 1. See list", "> 3. Remove child", "> 0. Exit" );
+            System.out.printf("\t%-20s | %-25s | %-24s \n", "> 1. See list", "> 3. Remove child", "> 0. Back" );
             System.out.printf("\t%-20s \n\n", "> 2. Add child");
 
             //select option
             print();
-            System.out.println("Select: ");
+            System.out.print("Select : ");
             choice = Input.checkInt(0, 3);
 
             switch (choice){
@@ -432,15 +436,49 @@ class UserInterface {
                     //go back to the main menu
                 case 1:
                     printText("- WAITING LIST - ");
+                    System.out.println();
                     for(int i = 0; i < MyApp.getChildren().size(); i++){
                         if (MyApp.getChildren().get(i).isOnWaitingList()) {
                             MyApp.getChildren().get(i).toStringSimpleChild();
                         }
                     }
+                    System.out.println();
                     break;
                 case 2:
                     printText("- ADD CHILD - ");
+                    MyApp.getChildren().add(addChildFromConsole());
+                    MyApp.getChildren().get(MyApp.getChildren().size()-1).setOnWaitingList(true);
+                    break;
+                case 3:
+                    printText("- WAITING LIST - ");
+                    System.out.println();
+                    for(int i = 0; i < MyApp.getChildren().size(); i++){
+                        if (MyApp.getChildren().get(i).isOnWaitingList()) {
+                            MyApp.getChildren().get(i).toStringSimpleChild();
+                        }
+                    }
+                    print();
+                    System.out.println("Want to remove a child from the waiting list?");
+                    print();
+                    System.out.printf("\t%-20s \n", "> 1. Yes");
+                    System.out.printf("\t%-20s \n\n", "> 0. No");
+                    print();
+                    System.out.print("Select : ");
+                    choice2 = Input.checkInt(0, 1);
+                    print();
+                    switch (choice2){
+                        case 0:
+                            break;
+                        case 1:
+                            System.out.print("Please enter the Child ID of the child you want to remove : ");
+                            int answer = Input.checkInt(0, (MyApp.getChildren().size()));
+                            MyApp.getChildren().removeIf(child -> child.getChildID() == answer);
+                            break;
+                        default:
+                    }
 
+
+                    default:
             }
         } while (choice != -1);
 
@@ -451,11 +489,11 @@ class UserInterface {
         do {
             //Print menu options
             printText("- TELEPHONE LISTS - ");
-            System.out.printf("\t%-20s | %-25s \n", "> 1. Employees", "> 0. Exit" );
+            System.out.printf("\t%-20s | %-25s \n", "> 1. Employees", "> 0. Back" );
             System.out.printf("\t%-20s | \n\n", "> 2. Parents" );
             //select option
             print();
-            System.out.println("Select: ");
+            System.out.print("Select : ");
             choice = Input.checkInt(0, 2);
 
             switch (choice) {
@@ -463,12 +501,16 @@ class UserInterface {
                     choice = -1;
                     break;
                 case 1:
+                    // prints all employees, including their telephone list
+                    printText(" - EMPLOYEE TELEPHONE LIST - ");
                     for(int i = 0; i < empSize; i++){
                         emp.get(i).toStringSimplePrintPerson();
                         print();
                     }
                     break;
                 case 2:
+                    // prints all parents, including their phone number
+                    printText(" - PARENT TELEPHONE LIST - ");
                     for(int i = 0; i < MyApp.getParents().size(); i++ ){
                         MyApp.getParents().get(i).toStringSimplePrintPerson();
                         print();
@@ -480,8 +522,66 @@ class UserInterface {
     }
 
     private void children() {
+        int choice =-1;
+        int choice2 = -1;
 
+        do {
+            //print menu options
+            printText(" - CHILD MENU - ");
+            System.out.println();
+            System.out.printf("\t%-30s | %-25s \n", "> 1. Show list of Children", "> 3. Remove child");
+            System.out.printf("\t%-30s | %-25s \n\n", "> 2. Add Child", "> 0. Back" );
+
+            // select option
+            print();
+            System.out.print("Select : ");
+            choice = Input.checkInt(0, 3);
+            switch (choice) {
+                case 0:
+                    choice = -1;
+                    break;
+                case 1:
+                    //Prints a list of all the children in the day care
+                    printText(" - LIST OF CHILDREN - ");
+                    for (int i = 0; i < MyApp.getChildren().size(); i++) {
+                        MyApp.getChildren().get(i).toStringSimpleChild();
+                    }
+                    print();
+                    break;
+                case 2:
+                    printText(" - ADD CHILD - ");
+                    MyApp.getChildren().add(addChildFromConsole());
+                    break;
+                case 3:
+                    printText(" - LIST OF CHILDREN - ");
+                    for (int i = 0; i < MyApp.getChildren().size(); i++) {
+                        MyApp.getChildren().get(i).toStringSimpleChild();
+                    }
+                    print();
+                    System.out.println("Want to remove a child from the waiting list?");
+                    print();
+                    System.out.printf("\t%-20s \n", "> 1. Yes");
+                    System.out.printf("\t%-20s \n\n", "> 0. No");
+                    print();
+                    System.out.print("Select : ");
+                    choice2 = Input.checkInt(0, 1);
+                    print();
+                    switch (choice2) {
+                        case 0:
+                            break;
+                        case 1:
+                            System.out.print("Please enter the Child ID of the child you want to remove : ");
+                            int answer = Input.checkInt(0, (MyApp.getChildren().size()));
+                            MyApp.getChildren().removeIf(child -> child.getChildID() == answer);
+                            break;
+                        default:
+
+                    }
+                default:
+            }
+        } while (choice != -1);
     }
+
 
     void employeeMenu() {
         int choice = -1;
@@ -494,7 +594,7 @@ class UserInterface {
             System.out.printf("\t%-20s | %-25s \n\n", "> 2. Waiting List", "> 4. Change account" );
             //select option
             print();
-            System.out.println("Select: ");
+            System.out.print("Select : ");
             choice = Input.checkInt(0, 4);
             switch (choice) {
                 case 0:
@@ -521,6 +621,87 @@ class UserInterface {
 
         } while ( choice != -1);
     }
+
+    public Child addChildFromConsole() {
+        String tempFirstName1;
+        String tempLastName1;
+        String tempFirstName2;
+        String tempLastName2;
+        String tempPhoneNumber;
+        int tempParentID;
+        int choice = -1;
+        System.out.println("Is the parent already in the system? (Do they have a kid in the daycare already)");
+        print();
+
+        do {
+            System.out.printf("\t%-20s | %-25s \n", "> 1. Yes", "> 0. Back" );
+            System.out.printf("\t%-20s \n\n", "> 2. No");
+            print();
+            System.out.print("Select : ");
+            choice = Input.checkInt(0, 2);
+            print();
+
+            switch (choice){
+                case 0:
+                    choice = -1;
+                    break;
+                case 1:
+                    for (int i = 0; i < MyApp.getParents().size(); i++){
+                        MyApp.getParents().get(i).toStringSimplePrintParent();
+                    }
+                    print();
+                    System.out.print("Please enter the parent ID of the existing parent : ");
+                    tempParentID = Input.checkInt(0, (MyApp.getParents().size()-1));
+
+                    //get name
+                    System.out.print("First name of the child : ");
+                    tempFirstName1 = Input.checkName();
+
+                    //get last name
+                    System.out.print("Last name of the child : ");
+                    tempLastName1 = Input.checkName();
+                    print();
+
+                    //creates child with given information
+                    Child tempChild1 = new Child(tempFirstName1, tempLastName1, tempParentID);
+                    tempChild1.toStringSimpleChild();
+                    return tempChild1;
+
+                case 2:
+                    System.out.println("Please add a new parent to the system");
+                    System.out.print("First name : ");
+                    tempFirstName2 = Input.checkName();
+
+                    System.out.print("Last name : ");
+                    tempLastName2 = Input.checkName();
+
+                    System.out.print("Phone number : ");
+                    tempPhoneNumber = Input.checkPhoneNr();
+
+                    Parent tempParent = new Parent(tempFirstName2, tempLastName2, tempPhoneNumber);
+                    MyApp.getParents().add(tempParent);
+                    System.out.println("Parent added to the system!");
+                    print();
+
+                    //get name of child
+                    System.out.print("First name of the child : ");
+                    tempFirstName1 = Input.checkName();
+
+                    //get last name of child
+                    System.out.print("Last name of the child : ");
+                    tempLastName1 = Input.checkName();
+                    print();
+
+                    Child tempChild2 = new Child(tempFirstName1, tempLastName1, tempParent.getParentID());
+                    return tempChild2;
+                default:
+            }
+
+        } while(choice != -1);
+        return null;
+
+    }
+
 
     //FORMATTING  -- ONLY USED WITHIN THE CLASS --
     private void printText(String text) {
