@@ -1,6 +1,6 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +16,6 @@ public class FileManagement {
         // 3 : ArrayList of Children
         // 4 : ArrayList of Parents
         // 5 : ArrayList of Integers
-        // 6 : ArrayList of Integers
         // 7 : Integer for People count
 
         //Scanners for each file
@@ -31,7 +30,7 @@ public class FileManagement {
 
         //read all files and throw exception
         try {
-            admins = new Scanner(new File(""));
+            admins = new Scanner(new File("/Users/teodorjonasson/Desktop/RoskildeDaycare/admins.txt"));
             employees = new Scanner(new File(""));
             workschedules = new Scanner(new File(""));
             children = new Scanner(new File(""));
@@ -46,24 +45,47 @@ public class FileManagement {
         return objectList;
     }
 
-    public void writeToFiles(ArrayList<Object> objectList) {
+    public void writeToFiles(ArrayList<Object> objectList) throws FileNotFoundException {
+
+        PrintStream adm = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/admins.txt");
+        PrintStream emp = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/employees.txt");
+        PrintStream work = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/workSchedules.txt");
+        PrintStream ch = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/children.txt");
+        PrintStream pa = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/parents.txt");
+        PrintStream counts = new PrintStream("/Users/teodorjonasson/Desktop/RoskildeDaycare/peopleCount.txt");
 
         // 0 : ArrayList of Admins
         // 1 : ArrayList of Employees
         // 2 : ArrayList of Workschedules
         // 3 : ArrayList of Children
         // 4 : ArrayList of Parents
-        // 5 : ArrayList of Integers
-        // 6 : ArrayList of Integers
-        // 7 : Integer for People count
+        // 5 : Integer array for People count
 
-        ArrayList<Admin> admin = (ArrayList<Admin>) objectList.get(0);
+        ArrayList<Admin> admins = (ArrayList<Admin>) objectList.get(0);
         ArrayList<Employee> employees = (ArrayList<Employee>) objectList.get(1);
         ArrayList<WorkSchedule> workSchedules = (ArrayList<WorkSchedule>) objectList.get(2);
         ArrayList<Child> children = (ArrayList<Child>) objectList.get(3);
         ArrayList<Parent> parents = (ArrayList<Parent>) objectList.get(4);
-        ArrayList<Integer> telephoneList = (ArrayList<Integer>) objectList.get(5);
-        ArrayList<Integer> waitingList = (ArrayList<Integer>) objectList.get(6);
+        int[] peopleCount = (int[]) objectList.get(5);
+
+        for (Admin admin : admins ) {
+            adm.println( admin.toStringFile() );
+        }
+        for (Employee employee : employees ) {
+            emp.println( employee.toStringFile() );
+        }
+        for (WorkSchedule workSchedule : workSchedules ) {
+            work.println( workSchedule.toStringFile() );
+        }
+        for (Child child : children ) {
+            ch.println( child.toStringFile() );
+        }
+        for (Parent parent : parents ) {
+            pa.println( parent.toStringFile() );
+        }
+        for (int i = 0; i < 3; i++ ) {
+            counts.println( peopleCount.get(i) );
+        }
 
     }
 }

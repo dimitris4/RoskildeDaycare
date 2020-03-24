@@ -12,8 +12,6 @@ public class MyApp {
     private static ArrayList<WorkSchedule> workSchedules = new ArrayList<>();
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<Parent> parents = new ArrayList<>();
-    private static ArrayList<Integer> telephoneList = new ArrayList<>();
-    private static ArrayList<Integer> waitingList = new ArrayList<>();
 
     //ID counts
     private static int personID = 4;
@@ -53,9 +51,7 @@ public class MyApp {
         // 2 : ArrayList of Workschedules
         // 3 : ArrayList of Children
         // 4 : ArrayList of Parents
-        // 5 : ArrayList of Integers
-        // 6 : ArrayList of Integers
-        // 7 : Integer for People count
+        // 5 : Integer for People count
 
         //FOR USE
         /*admins = (ArrayList<Admin>) loadedLists.get(0);
@@ -63,16 +59,12 @@ public class MyApp {
         workSchedules = (ArrayList<WorkSchedule>) loadedLists.get(2);
         children = (ArrayList<Child>) loadedLists.get(3);
         parents = (ArrayList<Parent>) loadedLists.get(4);
-        telephoneList = (ArrayList<Integer>) loadedLists.get(5);
-        waitingList = (ArrayList<Integer>) loadedLists.get(6);
 
         //FOR ID COUNTS
         adminID = admins.get(admins.size()-1).getAdminID();
         employeeID = employees.get(employees.size()).getEmployeeID();
         personID = loadedLists.get(7);
         */
-
-
 
         //FOR TESTING MAIN ADMIN
         Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "jonasson");
@@ -84,7 +76,7 @@ public class MyApp {
         parents.add(testParent2);
         Parent testParent3 = new Parent("moose", "max", "33333333");
         parents.add(testParent3);
-
+        
         Child testChild1 = new Child("child", "lack", testParent1.getParentID());
         children.add(testChild1);
         Child testChild2 = new Child("what", "luck", testParent2.getParentID());
@@ -105,15 +97,15 @@ public class MyApp {
 
         //Create ArrayList for all system info so it can be loaded into FileManagement
         ArrayList<Object> systemInfo = new ArrayList<>();
-
+        int[] peopleCount = {personID, employeeID, adminID};
         //Add infoList in CORRECT order
         systemInfo.add(admins);
         systemInfo.add(employees);
         systemInfo.add(workSchedules);
         systemInfo.add(children);
         systemInfo.add(parents);
-        systemInfo.add(telephoneList);
-        systemInfo.add(waitingList);
+        systemInfo.add(peopleCount);
+        //systemInfo.add(waitingList);
 
         //Send ArrayList to FileManagement to update files.
         FM.writeToFiles(systemInfo);
@@ -339,21 +331,21 @@ public class MyApp {
         MyApp.parents = parents;
     }
 
-    //returns a list of personIDs for each phone nr
+    /*//returns a list of personIDs for each phone nr
     public static ArrayList<Integer> getTelephoneList() {
         return telephoneList;
-    }
+    }*/
 
-    public static void setTelephoneList(ArrayList<Integer> telephoneList) {
+    /*public static void setTelephoneList(ArrayList<Integer> telephoneList) {
         MyApp.telephoneList = telephoneList;
-    }
+    }*/
 
-    public static ArrayList<Integer> getWaitingList() {
+    /*public static ArrayList<Integer> getWaitingList() {
         return waitingList;
-    }
+    }*/
 
-    public static void setWaitingList(ArrayList<Integer> waitingList) {
+    /*public static void setWaitingList(ArrayList<Integer> waitingList) {
         MyApp.waitingList = waitingList;
-    }
+    }*/
 
 }

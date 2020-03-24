@@ -8,6 +8,15 @@ public class Employee extends Person {
     private int accessLevel;
 
     // constructor
+    public Employee(String firstName, String lastName, String telephone, String username, String password, int personID, int employeeID) {
+        super(firstName, lastName, telephone);
+        this.employeeID = employeeID;
+        super.setPersonID(personID);
+        this.username = username;
+        this.password = password;
+        this.accessLevel = 1;
+    }
+
     public Employee(String firstName, String lastName, String telephone, String username, String password) {
         super(firstName, lastName, telephone);
         this.employeeID = employeeIDCounter++;
@@ -21,6 +30,13 @@ public class Employee extends Person {
         this.employeeID = employeeID;
         employeeIDCounter++;
         super.setPersonID(super.getPersonID());
+        this.accessLevel = 1;
+    }
+
+    public Employee (Person person) {
+        super(person.getFirstName(), person.getLastName(), person.getTelephone());
+        this.employeeID = employeeIDCounter++;
+        super.setPersonID(person.getPersonID());
         this.accessLevel = 1;
     }
 
