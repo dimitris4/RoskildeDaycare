@@ -1,25 +1,24 @@
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class WorkSchedule {
-    private static int workScheduleIDCounter = 0; // auto-increment ID
-    private int workScheduleID;
+    //private static int workScheduleIDCounter = 0; // auto-increment ID
+    //public Object printNicely;
+    //private int workScheduleID;
     private int employeeID;
     private ArrayList<Shift> shifts = new ArrayList<>();
 
     // constructor
     public WorkSchedule() {
-        this.workScheduleID = workScheduleIDCounter++;
+
     }
 
-    public int getWorkScheduleID() {
+    /*public int getWorkScheduleID() {
         return workScheduleID;
-    }
+    }*/
 
-    public void setWorkScheduleID(int workScheduleID) {
+    /*public void setWorkScheduleID(int workScheduleID) {
         this.workScheduleID = workScheduleID;
-    }
+    }*/
 
     public int getEmployeeID() {
         return employeeID;
@@ -39,7 +38,15 @@ public class WorkSchedule {
 
     @Override
     public String toString() {
-        return workScheduleID + " " + employeeID;
+        return employeeID + " " + shifts;
+    }
+
+    public void printNicely() {
+        System.out.println(employeeID);
+        System.out.println();
+        for (Shift shift : shifts) {
+            System.out.println(shift);
+        }
     }
 
     /*public void displayWorkScheduleOfEmployee(int employeeID) {

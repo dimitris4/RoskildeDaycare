@@ -9,6 +9,7 @@ public class MyApp {
     //Management object attributes
     private static Employee currentUser = new Employee();
     private static FileManagement FM = new FileManagement();
+    private static Scanner console = new Scanner(System.in);
 
     //Information attributes
     private static ArrayList<Admin> admins = new ArrayList<>();
@@ -334,15 +335,14 @@ public class MyApp {
     /*******************************************************/
 
     public void createNewWorkSchedule() {
-        System.out.print("Enter employee ID: ");
-        int employeeID = Input.checkInt(1, getEmployees().size());
-        Scanner console = new Scanner(System.in);
-        WorkSchedule wc = new WorkSchedule();
+        UserInterface ui = new UserInterface();
+        ui.printEmployees();
         String str = "";
+        WorkSchedule wc = new WorkSchedule();
+        wc.setEmployeeID(checkEmployeeID());
         System.out.print("Enter any letter to continue creating shifts, or 'quit' to exit: ");
         str = console.nextLine();
         while (!str.equalsIgnoreCase("quit")) {
-            wc.setEmployeeID(employeeID);
             System.out.println();
             System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
             Date startingTime = Input.insertDate();
@@ -354,35 +354,155 @@ public class MyApp {
             System.out.println();
             System.out.print("Does this shift repeat weekly? (yes/no): ");
             String choice = console.nextLine();
-            switch (choice) {
-                case "yes":
-                    System.out.println("Ends on day: ");
-                    Date endsOnDate = Input.insertDate();
-                    Calendar cal1 = Calendar.getInstance();
-                    Calendar cal2 = Calendar.getInstance();
-                    cal1.setTime(shift.getStartingTime());
-                    cal2.setTime(shift.getEndingTime());
-                    System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
-                    while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
-                        cal1.add(Calendar.DATE, 7);
-                        cal2.add(Calendar.DATE, 7);
-                        arrayList.add(new Shift(cal1.getTime(), cal2.getTime()));
-                        shift = new Shift(cal1.getTime(), cal2.getTime());
-                    }
+            boolean flag = false;
+            while (!flag) {
+                switch (choice) {
+                    case "yes":
+                        System.out.print("Ends on day (use format: dd-MM-yyyy): ");
+                        Date endsOnDate = Input.insertDateWithoutTime();
+                        Calendar cal1 = Calendar.getInstance();
+                        Calendar cal2 = Calendar.getInstance();
+                        cal1.setTime(shift.getStartingTime());
+                        cal2.setTime(shift.getEndingTime());
+                        System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
+                        while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
+                            cal1.add(Calendar.DATE, 7);
+                            cal2.add(Calendar.DATE, 7);
+                            arrayList.add(new Shift(cal1.getTime(), cal2.getTime()));
+                            shift = new Shift(cal1.getTime(), cal2.getTime());
+                        }
+                        flag = true;
+                        break;
+                    case "no":
+                        flag = true;
+                        break;
+                    default:
+                        System.out.print("Incorrect input. Enter value (yes/no): ");
+                        choice = console.nextLine();
                     break;
-                case "no":
-                    break;
-                default:
-                    System.out.println("Incorrect input");
+                }
             }
             wc.setShifts(arrayList);
-            System.out.println(wc.getShifts());
-            System.out.print("Enter any letter to continue creating shifts, or 'cancel' to exit: ");
+            workSchedules.add(wc);
+            System.out.println(wc.getEmployeeID());
+            System.out.print("Enter any letter to add more shifts, or 'quit' to exit: ");
             str = console.nextLine();
         }
     }
 
+
+    public int checkEmployeeID() {
+        int employeeID = 0;
+        while (employeeID == 0) {
+            System.out.print("Enter employee ID: ");
+            employeeID = Input.checkInt(1, 999);
+            for (Employee employee : employees) {
+                if (employee.getEmployeeID() == employeeID) {
+                    return employeeID;
+                }
+            }
+            for (Admin admin : admins) {
+                if (admin.getEmployeeID() == employeeID) {
+                    return  employeeID;
+                }
+            }
+            System.out.print("Please enter a valid employee id: ");
+            employeeID = Input.checkInt(1, 999);
+        }
+        return 0;
+    }
+
+
     public void displayWorkScheduleWithinDateRange() {
+        System.out.println("Enter date range");
+        System.out.print("Enter start date: ");
+        Date date1 = Input.insertDateWithoutTime();
+        System.out.print("Enter end date: ");
+        Date date2 = Input.insertDateWithoutTime();
+        for (WorkSchedule wc : getWorkSchedules()) {
+            for (int i = 0; i < wc.getShifts().size(); i++) {
+                if (wc.getShifts().get(i).getStartingTime().compareTo(date1) > 0
+                    && wc.getShifts().get(i).getStartingTime().compareTo(date2) < 0) {
+                    System.out.println(wc.getShifts());
+                }
+            }
+        }
+    }
+
+    public void displayWorkScheduleOfEmployee() {
+        int employeeID = checkEmployeeID();
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                System.out.println(wc);
+            }
+        }
+    }
+
+    public void deleteWorkSchedule() {
+        int employeeID = checkEmployeeID();
+        workSchedules.removeIf(wc -> wc.getEmployeeID() == employeeID);
+    }
+
+    public void addShift() {
+        int employeeID = checkEmployeeID();
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
+                Date startingTime = Input.insertDate();
+                System.out.print("The shift ends at (use format: dd-MM-yyyy HH:mm): ");
+                Date endingTime = Input.insertDate();
+                if (shiftsDoNotOverlap(startingTime, wc.getEmployeeID())) {
+                    Shift shift = new Shift(startingTime, endingTime);
+                    wc.getShifts().add(shift);
+                    System.out.println();
+                    System.out.print("Does this shift repeat weekly? (yes/no): ");
+                    String choice = console.nextLine();
+                    boolean flag = false;
+                    while (!flag) {
+                        switch (choice) {
+                            case "yes":
+                                System.out.print("Ends on day (use format: dd-MM-yyyy): ");
+                                Date endsOnDate = Input.insertDateWithoutTime();
+                                Calendar cal1 = Calendar.getInstance();
+                                Calendar cal2 = Calendar.getInstance();
+                                cal1.setTime(shift.getStartingTime());
+                                cal2.setTime(shift.getEndingTime());
+                                System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
+                                while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
+                                    cal1.add(Calendar.DATE, 7);
+                                    cal2.add(Calendar.DATE, 7);
+                                    wc.getShifts().add(new Shift(cal1.getTime(), cal2.getTime()));
+                                    shift = new Shift(cal1.getTime(), cal2.getTime());
+                                }
+                                flag = true;
+                                break;
+                            case "no":
+                                flag = true;
+                                break;
+                            default:
+                                System.out.print("Incorrect input. Enter value (yes/no): ");
+                                choice = console.nextLine();
+                                break;
+                        }
+                    }
+                } else {
+                    System.out.println("The shift cannot be added because it overlaps with another one.");
+                }
+            }
+        }
+    }
+
+    public boolean shiftsDoNotOverlap(Date startingTime, int employeeID) {
+        for (int i = 0; i < workSchedules.size(); i++) {
+            if (workSchedules.get(i).getEmployeeID() == employeeID) {
+                for (int j = 0; j < workSchedules.get(i).getShifts().size(); j++) {
+                    if (workSchedules.get(i).getShifts().get(j).getStartingTime().compareTo(startingTime) == 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 

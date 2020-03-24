@@ -385,7 +385,6 @@ class UserInterface {
     }
 
     private void employeeListPrint(){
-
         //display full employee list
         text(" - Employee list -");
         for (int i = 0; i < empSize; i++) {
@@ -397,13 +396,33 @@ class UserInterface {
         }
     }
 
+    /*******************************************/
+    /* This is used in the Work schedules menu */
+    /******************************************/
+    public void printEmployees() {
+        System.out.println("---------------------------Employees-----------------------------------");
+        System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
+        for (Employee employee : emp) {
+            System.out.printf("%-25s %-25s %-25s", employee.getEmployeeID(), employee.getFirstName(), employee.getLastName());
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println("---------------------------Admins--------------------------------------");
+        for (Admin admin : adm) {
+            System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
+            System.out.printf("%-25s %-25s  %-25s \n", admin.getEmployeeID(), admin.getFirstName(), admin.getLastName());
+            System.out.println();
+        }
+    }
+
+
     private void workScheduleMenu() {
         while (true) {
             MyApp myApp = new MyApp();
             printText("- Schedules - ");
             System.out.println();
-            System.out.printf("\t%-45s | %-30s | %-30s | %-25s \n", "> 1. Create new work schedule", "> 3. Display work schedule of employee", "> 5. Delete work schedule", "> 0. Exit");
-            System.out.printf("\t%-45s | %-30s | %-30s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
+            System.out.printf("\t%-45s | %-40s | %-25s | %-30s \n", "> 1. Create new work schedule", "> 3. Display work schedule of employee", "> 5. Delete work schedule", "> 0. Exit");
+            System.out.printf("\t%-45s | %-40s | %-25s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
             print();
             System.out.print("Select: ");
             int choice = Input.checkInt(0, 6);
@@ -419,20 +438,17 @@ class UserInterface {
                     myApp.displayWorkScheduleWithinDateRange();
                     break;
                 case 3:
-                    System.out.print("Enter employee ID: ");
-                    int id = Input.checkInt(1,myApp.getEmployees().size());
-                    myApp.displayWorkScheduleOfEmployee(id);
+                    myApp.displayWorkScheduleOfEmployee();
                     break;
                 case 4:
                     updateWorkScheduleMenu();
                     break;
                 case 5:
-                    System.out.println("This operation will permanently remove all shifts assigned to an employee.");
-                    //wc.deleteWorkSchedule();
+                    System.out.println("This will remove all shifts assigned to an employee.");
+                    myApp.deleteWorkSchedule();
                     break;
                 case 6:
-                    choice = -1;
-                    MyApp.login();
+                    adminMenu();
                     break;
                 default:
             }
@@ -441,11 +457,11 @@ class UserInterface {
 
     private void updateWorkScheduleMenu() {
         while (true) {
-            WorkSchedule wc = new WorkSchedule();
+            MyApp myApp = new MyApp();
             printText("- Update Work Schedule - ");
             System.out.println();
             System.out.printf("\t%-17s | %-37s | %-25s \n", "> 1. Add shift", "> 3. Change starting time of a shift", "> 5. Back");
-            System.out.printf("\t%-17s | %-37s | %-25s \n\n", "> 2. Remove shift", "> 4. Change ending time of a shift", "> 6. Exit");
+            System.out.printf("\t%-17s | %-37s | %-25s \n\n", "> 2. Remove shift", "> 4. Change ending time of a shift", "> 0. Exit");
             print();
             System.out.print("Select: ");
             int choice = Input.checkInt(0, 5);
@@ -453,11 +469,9 @@ class UserInterface {
                 case 0:
                     MyApp.exit();
                     printText("- EXIT PROGRAM -");
-                    //choice = -1;
                     break;
                 case 1:
-                    System.out.print("Enter Employee ID: ");
-                    //wc.addShift(Input.checkInt(1,9999));
+                    myApp.addShift();
                     break;
                 case 2:
                     System.out.print("Enter Employee ID: ");
@@ -470,7 +484,7 @@ class UserInterface {
                     //wc.changeEndingTime();
                     break;
                 case 5:
-                    updateWorkScheduleMenu();
+                    workScheduleMenu();
                     break;
                 case 6:
                     workScheduleMenu();

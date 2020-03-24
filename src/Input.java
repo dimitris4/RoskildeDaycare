@@ -126,7 +126,7 @@ class Input {
                 sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 break;
             } catch (ParseException e) {
-                System.out.print("Day must have the following format (dd/mm/yyyy): ");
+                System.out.print("Day must have the following format (dd/mm/yyyy HH:mm): ");
                 str = console.nextLine();
                 continue;
             }
@@ -137,5 +137,24 @@ class Input {
     public static int diffInDays(Date date1, Date date2) {
         long diffInMillies = Math.abs(date2.getTime() - date1.getTime());
         return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    public static Date insertDateWithoutTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Scanner console = new Scanner(System.in);
+        String str = console.nextLine();
+        Date date;
+        while (true) {
+            try {
+                date = sdf.parse(str);
+                sdf = new SimpleDateFormat("dd-MM-yyyy");
+                break;
+            } catch (ParseException e) {
+                System.out.print("Day must have the following format (dd/mm/yyyy): ");
+                str = console.nextLine();
+                continue;
+            }
+        }
+        return date;
     }
 }

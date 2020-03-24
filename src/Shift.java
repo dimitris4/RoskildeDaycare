@@ -1,8 +1,9 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Shift {
-    private int shiftID;
-    private static int shiftIDCounter = 1;
+    //private int shiftID;
+    //private static int shiftIDCounter = 1;
     //private int workScheduleID;
     private Date startingTime;
     private Date endingTime;
@@ -11,7 +12,7 @@ public class Shift {
     public Shift(Date startingTime, Date endingTime) {
         this.startingTime = startingTime;
         this.endingTime = endingTime;
-        this.shiftID = shiftIDCounter++;
+        //this.shiftID = shiftIDCounter++;
     }
 
     public void setDate(Date date) {
@@ -36,6 +37,12 @@ public class Shift {
 
     @Override
     public String toString() {
-        return shiftID + " " + startingTime + " " + endingTime;
+        return formatDate(startingTime) + " " + formatDate(endingTime);
+    }
+
+    //converts date to string with this format: dd/mm/yyyy
+    public String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(date);
     }
 }
