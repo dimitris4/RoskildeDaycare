@@ -396,9 +396,10 @@ class UserInterface {
         }
     }
 
-    /*******************************************/
-    /* This is used in the Work schedules menu */
-    /******************************************/
+    /**********************************************************/
+    /*    Dimitrios - Methods for the Work schedules menu     */
+    /**********************************************************/
+
     public void printEmployees() {
         System.out.println("---------------------------Employees-----------------------------------");
         System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
@@ -474,19 +475,15 @@ class UserInterface {
                     myApp.addShift();
                     break;
                 case 2:
-                    System.out.print("Enter Employee ID: ");
-                    //wc.removeShift(Input.checkInt(1,9999));
+                    myApp.removeShift();
                     break;
                 case 3:
-                    //wc.changeStartingTime(Input.insertDate());
+                    myApp.changeStartingTime();
                     break;
                 case 4:
-                    //wc.changeEndingTime();
+                    myApp.changeEndingTime();
                     break;
                 case 5:
-                    workScheduleMenu();
-                    break;
-                case 6:
                     workScheduleMenu();
                     break;
                 default:

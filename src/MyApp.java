@@ -330,7 +330,7 @@ public class MyApp {
 
 
 
-    /*******************************************************/
+    /*******************************************************
     /*      Work Schedule related methods (Dimitris)       */
     /*******************************************************/
 
@@ -384,7 +384,8 @@ public class MyApp {
             }
             wc.setShifts(arrayList);
             workSchedules.add(wc);
-            System.out.println(wc.getEmployeeID());
+            System.out.println("Employee ID: " + wc.getEmployeeID());
+            System.out.println("Shifts: " + wc.getShifts());
             System.out.print("Enter any letter to add more shifts, or 'quit' to exit: ");
             str = console.nextLine();
         }
@@ -503,6 +504,50 @@ public class MyApp {
             }
         }
         return true;
+    }
+
+    public void removeShift() {
+        int employeeID = checkEmployeeID();
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                Date date = Input.insertDate();
+                for (Shift shift : wc.getShifts()) {
+                    if (shift.getStartingTime().compareTo(date) == 0) {
+                        wc.getShifts().remove(shift);
+                    }
+                }
+            }
+        }
+    }
+
+    public void changeStartingTime() {
+        int employeeID = checkEmployeeID();
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                Date date = Input.insertDate();
+                for (Shift shift : wc.getShifts()) {
+                    if (shift.getStartingTime().compareTo(date) == 0) {
+                        System.out.print("Enter new starting time (use format: dd-MM-yyyy HH:mm): ");
+                        shift.setStartingTime(Input.insertDate());
+                    }
+                }
+            }
+        }
+    }
+
+    public void changeEndingTime() {
+        int employeeID = checkEmployeeID();
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                Date date = Input.insertDate();
+                for (Shift shift : wc.getShifts()) {
+                    if (shift.getEndingTime().compareTo(date) == 0) {
+                        System.out.print("Enter new ending time (use format: dd-MM-yyyy HH:mm): ");
+                        shift.setStartingTime(Input.insertDate());
+                    }
+                }
+            }
+        }
     }
 
 
