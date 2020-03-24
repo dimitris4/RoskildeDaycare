@@ -327,21 +327,21 @@ public class MyApp {
         MyApp.parents = parents;
     }
 
+
+
     /*******************************************************/
     /*      Work Schedule related methods (Dimitris)       */
     /*******************************************************/
 
-    public void displayWorkScheduleOfEmployee(int id) {
-        System.out.println("inside display employee work schedule!");
-    }
-
-    public void createNewWorkSchedule(int employeeID) {
+    public void createNewWorkSchedule() {
+        System.out.print("Enter employee ID: ");
+        int employeeID = Input.checkInt(1, getEmployees().size());
         Scanner console = new Scanner(System.in);
         WorkSchedule wc = new WorkSchedule();
         String str = "";
-        System.out.print("Enter any letter to continue creating shifts, or 'cancel' to exit: ");
+        System.out.print("Enter any letter to continue creating shifts, or 'quit' to exit: ");
         str = console.nextLine();
-        while (!str.equalsIgnoreCase("cancel")) {
+        while (!str.equalsIgnoreCase("quit")) {
             wc.setEmployeeID(employeeID);
             System.out.println();
             System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
@@ -352,7 +352,7 @@ public class MyApp {
             Shift shift = new Shift(startingTime, endingTime);
             arrayList.add(shift);
             System.out.println();
-            System.out.println("Does this shift repeat weekly? (yes/no): ");
+            System.out.print("Does this shift repeat weekly? (yes/no): ");
             String choice = console.nextLine();
             switch (choice) {
                 case "yes":
@@ -362,8 +362,6 @@ public class MyApp {
                     Calendar cal2 = Calendar.getInstance();
                     cal1.setTime(shift.getStartingTime());
                     cal2.setTime(shift.getEndingTime());
-                    Date newStartingTime;
-                    Date newEndingTime;
                     System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
                     while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
                         cal1.add(Calendar.DATE, 7);
@@ -383,6 +381,10 @@ public class MyApp {
             str = console.nextLine();
         }
     }
+
+    public void displayWorkScheduleWithinDateRange() {
+    }
+
 
 
     /*//returns a list of personIDs for each phone nr

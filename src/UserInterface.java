@@ -402,7 +402,7 @@ class UserInterface {
             MyApp myApp = new MyApp();
             printText("- Schedules - ");
             System.out.println();
-            System.out.printf("\t%-45s | %-30s | %-30s | %-25s \n", "> 1. Display work schedule of employee", "> 3. Create new work schedule", "> 5. Delete work schedule", "> 0. Exit");
+            System.out.printf("\t%-45s | %-30s | %-30s | %-25s \n", "> 1. Create new work schedule", "> 3. Display work schedule of employee", "> 5. Delete work schedule", "> 0. Exit");
             System.out.printf("\t%-45s | %-30s | %-30s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
             print();
             System.out.print("Select: ");
@@ -413,17 +413,15 @@ class UserInterface {
                     printText("- EXIT PROGRAM -");
                     break;
                 case 1:
-                    System.out.print("Enter employee ID: ");
-                    int id = Input.checkInt(1,myApp.getEmployees().size());
-                    myApp.displayWorkScheduleOfEmployee(id);
+                    myApp.createNewWorkSchedule();
                     break;
                 case 2:
-                    //wc.displayWorkScheduleWithinDateRange(Input.insertDate());
+                    myApp.displayWorkScheduleWithinDateRange();
                     break;
                 case 3:
                     System.out.print("Enter employee ID: ");
-                    int employeeId = Input.checkInt(1, myApp.getEmployees().size());
-                    myApp.createNewWorkSchedule(employeeId);
+                    int id = Input.checkInt(1,myApp.getEmployees().size());
+                    myApp.displayWorkScheduleOfEmployee(id);
                     break;
                 case 4:
                     updateWorkScheduleMenu();
