@@ -1,4 +1,8 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Scanner;
 
 public class MyApp {
 
@@ -322,6 +326,64 @@ public class MyApp {
     public static void setParents(ArrayList<Parent> parents) {
         MyApp.parents = parents;
     }
+
+    /*******************************************************/
+    /*      Work Schedule related methods (Dimitris)       */
+    /*******************************************************/
+
+    public void displayWorkScheduleOfEmployee(int id) {
+        System.out.println("inside display employee work schedule!");
+    }
+
+    public void createNewWorkSchedule(int employeeID) {
+        Scanner console = new Scanner(System.in);
+        WorkSchedule wc = new WorkSchedule();
+        String str = "";
+        System.out.print("Enter any letter to continue creating shifts, or 'cancel' to exit: ");
+        str = console.nextLine();
+        while (!str.equalsIgnoreCase("cancel")) {
+            wc.setEmployeeID(employeeID);
+            System.out.println();
+            System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
+            Date startingTime = Input.insertDate();
+            System.out.print("The shift ends at (use format: dd-MM-yyyy HH:mm): ");
+            Date endingTime = Input.insertDate();
+            ArrayList<Shift> arrayList = new ArrayList<Shift>();
+            Shift shift = new Shift(startingTime, endingTime);
+            arrayList.add(shift);
+            System.out.println();
+            System.out.println("Does this shift repeat weekly? (yes/no): ");
+            String choice = console.nextLine();
+            switch (choice) {
+                case "yes":
+                    System.out.println("Ends on day: ");
+                    Date endsOnDate = Input.insertDate();
+                    Calendar cal1 = Calendar.getInstance();
+                    Calendar cal2 = Calendar.getInstance();
+                    cal1.setTime(shift.getStartingTime());
+                    cal2.setTime(shift.getEndingTime());
+                    Date newStartingTime;
+                    Date newEndingTime;
+                    System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
+                    while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
+                        cal1.add(Calendar.DATE, 7);
+                        cal2.add(Calendar.DATE, 7);
+                        arrayList.add(new Shift(cal1.getTime(), cal2.getTime()));
+                        shift = new Shift(cal1.getTime(), cal2.getTime());
+                    }
+                    break;
+                case "no":
+                    break;
+                default:
+                    System.out.println("Incorrect input");
+            }
+            wc.setShifts(arrayList);
+            System.out.println(wc.getShifts());
+            System.out.print("Enter any letter to continue creating shifts, or 'cancel' to exit: ");
+            str = console.nextLine();
+        }
+    }
+
 
     /*//returns a list of personIDs for each phone nr
     public static ArrayList<Integer> getTelephoneList() {

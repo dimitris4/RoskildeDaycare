@@ -3,19 +3,15 @@ import java.util.Date;
 public class Shift {
     private int shiftID;
     private static int shiftIDCounter = 1;
-    private int workScheduleID;
+    //private int workScheduleID;
     private Date startingTime;
     private Date endingTime;
 
     // constructor
-    public Shift(int workScheduleID) {
-        this.workScheduleID = workScheduleID;
-        this.shiftID = shiftIDCounter++;
-    }
-
     public Shift(Date startingTime, Date endingTime) {
         this.startingTime = startingTime;
         this.endingTime = endingTime;
+        this.shiftID = shiftIDCounter++;
     }
 
     public void setDate(Date date) {
@@ -40,6 +36,6 @@ public class Shift {
 
     @Override
     public String toString() {
-        return shiftID + " " + workScheduleID + " " + startingTime + " " + endingTime;
+        return shiftID + " " + startingTime + " " + endingTime;
     }
 }

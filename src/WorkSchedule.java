@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class WorkSchedule {
     private static int workScheduleIDCounter = 0; // auto-increment ID
     private int workScheduleID;
     private int employeeID;
-    private ArrayList<Shift> shifts;
+    private ArrayList<Shift> shifts = new ArrayList<>();
 
     // constructor
     public WorkSchedule() {
@@ -41,7 +42,7 @@ public class WorkSchedule {
         return workScheduleID + " " + employeeID;
     }
 
-    public void displayWorkScheduleOfEmployee(int employeeID) {
+    /*public void displayWorkScheduleOfEmployee(int employeeID) {
         System.out.println("Display Marias schedule!");
     }
 
@@ -74,6 +75,24 @@ public class WorkSchedule {
 
     public void changeEndingTime() {
         System.out.println("Change ending time!");
-    }
+    }*/
+
+    /*public void repeatWorkScheduleWeekly(Date lastDay) {
+        Calendar cal1 = null;
+        Calendar cal2 = null;
+        Date newStartingTime;
+        Date newEndingTime;
+        for (Shift shift : shifts) {
+            while (shift.getStartingTime().compareTo(lastDay) <= 0) {
+                cal1.setTime(shift.getStartingTime());
+                cal2.setTime(shift.getEndingTime());
+                cal1.add(Calendar.DATE, 7);
+                cal2.add(Calendar.DATE, 7);
+                newStartingTime = cal1.getTime();
+                newEndingTime = cal2.getTime();
+                shifts.add(new Shift(newStartingTime, newEndingTime));
+            }
+        }
+    }*/
 }
 
