@@ -11,22 +11,15 @@ class UserInterface {
     private int sumSize = empSize + admSize;
 
     Employee logInMenu() {
-
         Employee user = null;
         String username = "";
         String password = "";
         boolean login = false;
-
         printText("- LOGIN -");
-
         while (!login){
             System.out.print("Username : ");
-            //Get username
             username = Input.checkUsername();
-            //find match from username : returns null if there was no match
-            //otherwise return Employee object of user.
             user = MyApp.getEmployee(username);
-            //checks to see if there was a user match with username
             if (user == null) {
                 System.out.println("** no matching username **");
             } else {
@@ -406,7 +399,47 @@ class UserInterface {
     }
 
     private void schedules() {
+        int choice = -1;
+        WorkSchedule wc = new WorkSchedule();
+        do {
+            printText("- Schedules - ");
+            System.out.println();
+            System.out.print("> 1. Display schedule of a given employee" + "> 2. Display schedule on a given date" +
+                    "> 3. Create new schedule" + "> 4. Update schedule"+"> 5. Delete schedule"+ "> 6. Back" + "> 0. Exit" );
+            //System.out.printf("\t%-20s | %-25s | %-24s \n\n", "> 2. Back");
+            //Select option
+            print();
+            System.out.print("Select: ");
+            choice = Input.checkInt(0, 6);
+            switch (choice) {
+                case 0:
+                    MyApp.exit();
+                    printText("- EXIT PROGRAM -");
+                    //choice = -1;
+                    break;
+                case 1:
+                    wc.displayScheduleOfGivenEmployee(Input.checkInt(1,9999999));
+                    break;
+                case 2:
+                    wc.displayScheduleOnAGivenDate(Input.insertDate());
+                    break;
+                case 3:
+                    wc.createNewSchedule();
+                    break;
+                case 4:
+                    telephoneList();
+                    break;
+                case 5:
+                    children();
+                    break;
+                case 6:
+                    choice = -1;
+                    MyApp.login();
+                    break;
+                default:
 
+            }
+        } while (choice != -1);
     }
 
     private void waitingList() {

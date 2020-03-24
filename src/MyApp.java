@@ -12,8 +12,8 @@ public class MyApp {
     private static ArrayList<WorkSchedule> workSchedules = new ArrayList<>();
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<Parent> parents = new ArrayList<>();
-    private static ArrayList<Integer> telephoneList = new ArrayList<>();
-    private static ArrayList<Integer> waitingList = new ArrayList<>();
+    private static ArrayList<Person> people = new ArrayList<>();
+    //private static ArrayList<Integer> waitingList = new ArrayList<>();
 
     //ID counts
     private static int personID = 4;
@@ -96,8 +96,8 @@ public class MyApp {
         systemInfo.add(workSchedules);
         systemInfo.add(children);
         systemInfo.add(parents);
-        systemInfo.add(telephoneList);
-        systemInfo.add(waitingList);
+        //systemInfo.add(telephoneList);
+        //systemInfo.add(waitingList);
 
         //Send ArrayList to FileManagement to update files.
         FM.writeToFiles(systemInfo);
@@ -323,21 +323,21 @@ public class MyApp {
         MyApp.parents = parents;
     }
 
-    //returns a list of personIDs for each phone nr
+    /*//returns a list of personIDs for each phone nr
     public static ArrayList<Integer> getTelephoneList() {
         return telephoneList;
-    }
+    }*/
 
-    public static void setTelephoneList(ArrayList<Integer> telephoneList) {
+    /*public static void setTelephoneList(ArrayList<Integer> telephoneList) {
         MyApp.telephoneList = telephoneList;
-    }
+    }*/
 
-    public static ArrayList<Integer> getWaitingList() {
+    /*public static ArrayList<Integer> getWaitingList() {
         return waitingList;
-    }
+    }*/
 
-    public static void setWaitingList(ArrayList<Integer> waitingList) {
+    /*public static void setWaitingList(ArrayList<Integer> waitingList) {
         MyApp.waitingList = waitingList;
-    }
+    }*/
 
 }

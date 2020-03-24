@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.Scanner;
 
 class Input {
@@ -109,5 +110,10 @@ class Input {
         }
         in.nextLine();
         return Integer.parseInt(input);
+    }
+
+    public static Date insertDate() {
+        Date date = new Date();
+        return date;
     }
 }
