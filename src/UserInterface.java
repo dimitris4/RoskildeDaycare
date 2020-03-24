@@ -41,7 +41,6 @@ class UserInterface {
     }
 
     void adminMenu() {
-
         int choice = -1;
         do {
             //Print menu options
@@ -63,7 +62,7 @@ class UserInterface {
                     employees();
                     break;
                 case 2:
-                    schedules();
+                    workScheduleMenu();
                     break;
                 case 3:
                     waitingList();
@@ -398,19 +397,58 @@ class UserInterface {
         }
     }
 
-    private void schedules() {
-        int choice = -1;
-        WorkSchedule wc = new WorkSchedule();
-        do {
+    private void workScheduleMenu() {
+        while (true) {
+            WorkSchedule wc = new WorkSchedule();
             printText("- Schedules - ");
             System.out.println();
-            System.out.print("> 1. Display schedule of a given employee" + "> 2. Display schedule on a given date" +
-                    "> 3. Create new schedule" + "> 4. Update schedule"+"> 5. Delete schedule"+ "> 6. Back" + "> 0. Exit" );
-            //System.out.printf("\t%-20s | %-25s | %-24s \n\n", "> 2. Back");
+            System.out.printf("\t%-45s | %-30s | %-30s | %-25s \n", "> 1. Display work schedule of employee", "> 3. Create new work schedule", "> 5. Delete work schedule", "> 0. Exit");
+            System.out.printf("\t%-45s | %-30s | %-30s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
             //Select option
             print();
             System.out.print("Select: ");
-            choice = Input.checkInt(0, 6);
+            int choice = Input.checkInt(0, 6);
+            switch (choice) {
+                case 0:
+                    MyApp.exit();
+                    printText("- EXIT PROGRAM -");
+                    break;
+                case 1:
+                    System.out.print("Enter employee ID: ");
+                    wc.displayWorkScheduleOfEmployee(Input.checkInt(1,9999));
+                    break;
+                case 2:
+                    wc.displayWorkScheduleWithinDateRange(Input.insertDate());
+                    break;
+                case 3:
+                    wc.createNewWorkSchedule();
+                    break;
+                case 4:
+                    updateWorkScheduleMenu();
+                    break;
+                case 5:
+                    System.out.println("This operation will permanently remove all shifts assigned to an employee.");
+                    wc.deleteWorkSchedule();
+                    break;
+                case 6:
+                    choice = -1;
+                    MyApp.login();
+                    break;
+                default:
+            }
+        }
+    }
+
+    private void updateWorkScheduleMenu() {
+        while (true) {
+            WorkSchedule wc = new WorkSchedule();
+            printText("- Update Work Schedule - ");
+            System.out.println();
+            System.out.printf("\t%-17s | %-37s | %-25s \n", "> 1. Add shift", "> 3. Change starting time of a shift", "> 5. Back");
+            System.out.printf("\t%-17s | %-37s | %-25s \n\n", "> 2. Remove shift", "> 4. Change ending time of a shift", "> 6. Exit");
+            print();
+            System.out.print("Select: ");
+            int choice = Input.checkInt(0, 5);
             switch (choice) {
                 case 0:
                     MyApp.exit();
@@ -418,28 +456,28 @@ class UserInterface {
                     //choice = -1;
                     break;
                 case 1:
-                    wc.displayScheduleOfGivenEmployee(Input.checkInt(1,9999999));
+                    System.out.print("Enter Employee ID: ");
+                    wc.addShift(Input.checkInt(1,9999));
                     break;
                 case 2:
-                    wc.displayScheduleOnAGivenDate(Input.insertDate());
+                    System.out.print("Enter Employee ID: ");
+                    wc.removeShift(Input.checkInt(1,9999));
                     break;
                 case 3:
-                    wc.createNewSchedule();
+                    wc.changeStartingTime(Input.insertDate());
                     break;
                 case 4:
-                    telephoneList();
+                    wc.changeEndingTime();
                     break;
                 case 5:
-                    children();
+                    updateWorkScheduleMenu();
                     break;
                 case 6:
-                    choice = -1;
-                    MyApp.login();
+                    workScheduleMenu();
                     break;
                 default:
-
             }
-        } while (choice != -1);
+        }
     }
 
     private void waitingList() {
