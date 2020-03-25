@@ -73,19 +73,19 @@ public class FileManagement {
             adm.println( admin.toStringFile() );
         }
         for (Employee employee : employees ) {
-            emp.println( employee.toStringFile() );
+           // emp.println( employee.toStringFile() );
         }
         for (WorkSchedule workSchedule : workSchedules ) {
-            work.println( workSchedule.toStringFile() );
+         //   work.println( workSchedule.toStringFile() );
         }
         for (Child child : children ) {
-            ch.println( child.toStringFile() );
+          //  ch.println( child.toStringFile() );
         }
         for (Parent parent : parents ) {
-            pa.println( parent.toStringFile() );
+           // pa.println( parent.toStringFile() );
         }
         for (int i = 0; i < 3; i++ ) {
-            counts.println( peopleCount.get(i) );
+          //  counts.println( peopleCount.get(i) );
         }
 
     }
