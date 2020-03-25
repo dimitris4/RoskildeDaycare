@@ -48,10 +48,10 @@ public class MyApp {
     //populate information attributes of class MyApp
     public static void loadInfo () {
         admins = FM.readAdminsFromFile();
-        //employees = FM.readEmployeesFromFile();
-        //workSchedules = FM.readWorkSchedulesFromFile();
-        //children = FM.readChildrenFromFile();
-        //parents = FM.readParentsFromFile();
+        employees = FM.readEmployeesFromFile();
+        workSchedules = FM.readWorkSchedulesFromFile();
+        children = FM.readChildrenFromFile();
+        parents = FM.readParentsFromFile();
     }
 
 
@@ -67,7 +67,7 @@ public class MyApp {
         systemInfo.add(workSchedules);
         systemInfo.add(children);
         systemInfo.add(parents);
-        systemInfo.add(peopleCount);
+        //systemInfo.add(peopleCount);
     }
 
     //REMOVE ADMIN with adminID

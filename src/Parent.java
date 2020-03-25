@@ -11,6 +11,10 @@ public class Parent extends Person {
         this.parentID = parentIDCounter++;
     }
 
+    public Parent() {
+
+    }
+
     /*public Parent() {
         super(getFirstName(), getLastName(), getTelephone());
         this.parentID = parentIDCounter++;

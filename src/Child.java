@@ -1,14 +1,13 @@
-public class Child extends Person{
+public class Child extends Person {
 
     private int childID;
     private static int childIDCounter = 1;
     private int parentID;
-    private String firstName;
-    private String lastName;
     private boolean onWaitingList;
 
-    // constructor
+    // constructors
 
+    public Child() {}
 
     public Child(String firstName, String lastName, int parentID) {
         super(firstName, lastName, null);
@@ -41,30 +40,14 @@ public class Child extends Person{
         this.onWaitingList = onWaitingList;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     @Override
     public String toString() {
-        return  childID +
+        return        childID +
                 " " + parentID +
-                " " + firstName + " " +
-                " " + lastName + " " +
                 " " + onWaitingList +
-                " " + super.toString();
+                " " + super.getPersonID() +
+                " " + super.getFirstName() +
+                " " + super.getLastName();
     }
 
     public void toStringPrint() {

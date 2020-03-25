@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class FileManagement {
@@ -41,44 +42,159 @@ public class FileManagement {
         return admins;
     }
 
-    public ArrayList<WorkSchedule> readWorkSchedulesFromFile() throws FileNotFoundException, ParseException {
-        ArrayList<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
-        Scanner input = new Scanner(new File("workSchedules.txt"));
+    public ArrayList<Employee> readEmployeesFromFile() {
+        Scanner input = null;
+        try {
+            input = new Scanner(new File("employees.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        ArrayList<Employee> employees = new ArrayList<Employee>();
         while (input.hasNextLine()) {
-            WorkSchedule workSchedule = new WorkSchedule();
             String line = input.nextLine();
+            System.out.println(line);
             Scanner data = new Scanner(line);
-            workSchedule.setEmployeeID(data.nextInt());
+            Employee employee = new Employee();
+            while (data.hasNext()) {
+                employee.setEmployeeID(Integer.parseInt(data.next()));
+                employee.setWorkSchedule(Integer.parseInt(data.next()));
+                employee.setUsername(data.next());
+                employee.setPassword(data.next());
+                employee.setAccessLevel(Integer.parseInt(data.next()));
+                employee.setPersonID(Integer.parseInt(data.next()));
+                employee.setFirstName(data.next());
+                employee.setLastName(data.next());
+                employee.setTelephone(data.next());
+            }
+            employees.add(employee);
+            data.close();
+        }
+        return employees;
+    }
+
+    public ArrayList<WorkSchedule> readWorkSchedulesFromFile() {
+        Scanner input = null;
+        try {
+            input = new Scanner(new File("workSchedules.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        ArrayList<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
+        while (input.hasNextLine()) {
+            String line = input.nextLine();
+            System.out.println(line);
+            Scanner data = new Scanner(line);
+            WorkSchedule wc = new WorkSchedule();
+            if (data.hasNext()) {
+                wc.setEmployeeID(Integer.parseInt(data.next()));
+            }
             ArrayList<Shift> shifts = new ArrayList<Shift>();
             while (data.hasNext()) {
-                Shift shift = new Shift();
-                String startingTime = "";
-                for (int i = 0; i < 2; i++) {
-                    startingTime += data.next();
-                }
+                String str = data.next() + " " + data.next();
+                String str2 = data.next() + " " + data.next();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                shift.setStartingTime(sdf.parse(startingTime));
-                String endingTime = "";
-                for (int i = 0; i < 2; i++) {
-                     endingTime += data.next();
+                Date startingDate = null;
+                Date endingDate = null;
+                try {
+                    startingDate = sdf.parse(str);
+                    endingDate = sdf.parse(str2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                shift.setEndingTime(sdf.parse(endingTime));
-                shifts.add(shift);
+                shifts.add(new Shift(startingDate, endingDate));
             }
-            workSchedule.setShifts(shifts);
-            workSchedules.add(workSchedule);
+            workSchedules.add(wc);
         }
         return workSchedules;
     }
 
 
-/*
-    public ArrayList<Employee> readEmployeesFromFile() {
-    }
-
     public ArrayList<Child> readChildrenFromFile() {
+        Scanner input = null;
+        try {
+            input = new Scanner(new File("children.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        ArrayList<Child> children = new ArrayList<Child>();
+        while (input.hasNextLine()) {
+            String line = input.nextLine();
+            System.out.println(line);
+            Scanner data = new Scanner(line);
+            Child child = new Child();
+            while (data.hasNext()) {
+                child.setChildID(Integer.parseInt(data.next()));
+                child.setParentID(Integer.parseInt(data.next()));
+                child.setOnWaitingList(data.nextBoolean());
+                child.setPersonID(Integer.parseInt(data.next()));
+                child.setFirstName(data.next());
+                child.setLastName(data.next());
+            }
+            children.add(child);
+            data.close();
+        }
+        return children;
     }
 
     public ArrayList<Parent> readParentsFromFile() {
-    }   */
+        Scanner input = null;
+        try {
+            input = new Scanner(new File("parents.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+        ArrayList<Parent> parents = new ArrayList<Parent>();
+        while (input.hasNextLine()) {
+            String line = input.nextLine();
+            System.out.println(line);
+            Scanner data = new Scanner(line);
+            Parent parent = new Parent();
+            while (data.hasNext()) {
+                parent.setParentID(Integer.parseInt(data.next()));
+                parent.setPersonID(Integer.parseInt(data.next()));
+                parent.setFirstName(data.next());
+                parent.setLastName(data.next());
+                parent.setTelephone(data.next());
+            }
+            parents.add(parent);
+            data.close();
+        }
+        return parents;
+    }
+
+    public void saveAdminsToFile(ArrayList<Admin> admins) throws FileNotFoundException {
+        PrintStream output = new PrintStream(new File("admins.txt"));
+        for (int i = 0; i < admins.size(); i++) {
+            output.println(admins.get(i));
+        }
+    }
+
+    public void saveEmployeesToFile(ArrayList<Employee> employees) throws FileNotFoundException {
+        PrintStream output = new PrintStream(new File("workSchedules.txt"));
+        for (int i = 0; i < employees.size(); i++) {
+            output.println(employees.get(i));
+        }
+    }
+
+    public void saveWorkSchedulesToFile(ArrayList<WorkSchedule> workSchedules) throws FileNotFoundException {
+        PrintStream output = new PrintStream(new File("workSchedules.txt"));
+        for (int i = 0; i < workSchedules.size(); i++) {
+            output.println(workSchedules.get(i));
+        }
+    }
+
+    public void saveChildrenToFile(ArrayList<Child> children) throws FileNotFoundException {
+        PrintStream output = new PrintStream(new File("children.txt"));
+        for (int i = 0; i < children.size(); i++) {
+            output.println(children.get(i));
+        }
+    }
+
+    public void saveParentsToFile(ArrayList<Parent> parents) throws FileNotFoundException {
+        PrintStream output = new PrintStream(new File("parents.txt"));
+        for (int i = 0; i < parents.size(); i++) {
+            output.println(parents.get(i));
+        }
+    }
+
 }

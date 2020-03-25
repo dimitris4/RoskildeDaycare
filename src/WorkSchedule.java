@@ -38,7 +38,7 @@ public class WorkSchedule {
 
     @Override
     public String toString() {
-        return employeeID + " " + shifts;
+        return employeeID + " " + formatArray(shifts);
     }
 
     public void printNicely() {
@@ -47,6 +47,15 @@ public class WorkSchedule {
         for (Shift shift : shifts) {
             System.out.println(shift);
         }
+    }
+
+    //removes brackets and commas from the ArrayList representation as a string.
+    public StringBuilder formatArray(ArrayList<Shift> shifts) {
+        StringBuilder builder = new StringBuilder();
+        for (Shift shift : shifts) {
+            builder.append(shift);
+        }
+        return builder;
     }
 
     /*public void displayWorkScheduleOfEmployee(int employeeID) {

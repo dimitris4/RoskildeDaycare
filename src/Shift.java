@@ -10,7 +10,6 @@ public class Shift {
     public Shift(Date startingTime, Date endingTime) {
         this.startingTime = startingTime;
         this.endingTime = endingTime;
-        //this.shiftID = shiftIDCounter++;
     }
 
     public Shift() {
