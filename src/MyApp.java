@@ -1,4 +1,3 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +29,7 @@ public class MyApp {
         loadInfo();
 
         //starts UI
-        login();
+        //login();
     }
 
     public static void login() {
@@ -48,7 +47,11 @@ public class MyApp {
 
     //populate information attributes of class MyApp
     public static void loadInfo () {
-        ArrayList<Object> loadedLists = FM.readFromFiles();
+        admins = FM.readAdminsFromFile();
+        //employees = FM.readEmployeesFromFile();
+        //workSchedules = FM.readWorkSchedulesFromFile();
+        //children = FM.readChildrenFromFile();
+        //parents = FM.readParentsFromFile();
     }
 
 

@@ -2,19 +2,19 @@ public class Employee extends Person {
 
     private int employeeID;
     private static int employeeIDCounter = 0;
-    private int workScheduleID = -1; // set -1 by default until the given employee is assigned a work schedule
+    private int workScheduleID; // set -1 by default until the given employee is assigned a work schedule
     private String username;
     private String password;
     private int accessLevel;
 
     // constructor
-    public Employee(String firstName, String lastName, String telephone, String username, String password, int personID, int employeeID) {
+    public Employee(int employeeID, int workScheduleID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
         super(firstName, lastName, telephone);
         this.employeeID = employeeID;
-        super.setPersonID(personID);
+        this.workScheduleID = workScheduleID;
         this.username = username;
         this.password = password;
-        this.accessLevel = 1;
+        this.accessLevel = accessLevel;
     }
 
     public Employee(String firstName, String lastName, String telephone, String username, String password) {
@@ -26,12 +26,6 @@ public class Employee extends Person {
         this.password = password;
     }
 
-    public Employee (int employeeID) {
-        this.employeeID = employeeID;
-        employeeIDCounter++;
-        super.setPersonID(super.getPersonID());
-        this.accessLevel = 1;
-    }
 
     public Employee (Person person) {
         super(person.getFirstName(), person.getLastName(), person.getTelephone());
@@ -40,10 +34,8 @@ public class Employee extends Person {
         this.accessLevel = 1;
     }
 
-    public Employee () {
-        this.employeeID = employeeIDCounter++;
-        super.setPersonID(super.getPersonID());
-        this.accessLevel = 1;
+    public Employee() {
+        super();
     }
 
     //Getters and setters
@@ -88,10 +80,15 @@ public class Employee extends Person {
     }
 
     //toStrings for print, string return and account info
+
+
     @Override
     public String toString() {
-        return employeeID + " " + getPersonID() + " " + workScheduleID  + " " + username + " " +
-                password;
+        return  employeeID +
+                " " + workScheduleID +
+                " " + username + " " +
+                " " + password + " " + accessLevel +
+                " " + super.toString();
     }
 
     public void toStringPrint() {

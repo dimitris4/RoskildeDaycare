@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Parent extends Person {
 
     private int parentID;
@@ -13,9 +11,10 @@ public class Parent extends Person {
         this.parentID = parentIDCounter++;
     }
 
-    public Parent() {
+    /*public Parent() {
+        super(getFirstName(), getLastName(), getTelephone());
         this.parentID = parentIDCounter++;
-    }
+    }*/
 
     public int getParentID() {
         return parentID;
@@ -27,7 +26,8 @@ public class Parent extends Person {
 
     @Override
     public String toString() {
-        return parentID + " " + getPersonID();
+        return  parentID +
+                " " + super.toString();
     }
 
     public void toStringSimplePrintParent(){

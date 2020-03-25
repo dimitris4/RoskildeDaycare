@@ -7,8 +7,8 @@ public class Person {
     private String telephone;
 
     // constructor
-    public Person(String firstName, String lastName, String telephone) {
-        this.personID = personIDCounter++;
+    public Person(int personID, String firstName, String lastName, String telephone) {
+        this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
@@ -16,11 +16,12 @@ public class Person {
 
     public Person(int personID){
         this.personID = personID;
-        personIDCounter++;
     }
 
     public Person() {
-        this.personID = personIDCounter++;
+    }
+
+    public Person(String firstName, String lastName, Object o) {
     }
 
     public int getPersonID() {
@@ -57,7 +58,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return personID + " " + firstName + " " + lastName + " " + telephone;
+        return  personID +
+                " " + firstName + " " +
+                " " + lastName + " " +
+                " " + telephone;
     }
 
     public void toStringPrint() {

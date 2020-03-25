@@ -4,10 +4,13 @@ public class Admin extends Employee {
     private int adminID;
 
     // constructors
-    public Admin(String firstName, String lastName, String telephone, String username, String password, int personID, int emplyeeID, int adminID) {
-        super(firstName, lastName, telephone, username, password, personID, emplyeeID);
+    public Admin() {
+        super();
+    }
+
+    public Admin(int adminID, int employeeID, int workScheduleID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
+        super(employeeID, workScheduleID, username, password, accessLevel, personID, firstName, lastName, telephone);
         this.adminID = adminID;
-        this.setAccessLevel(2);
     }
 
     public Admin(String firstName, String lastName, String telephone, String username, String password) {
@@ -22,15 +25,6 @@ public class Admin extends Employee {
         this.setAccessLevel(2);
     }
 
-    public Admin(int adminID) {
-        this.adminID = adminID;
-        adminIDCounter++;
-    }
-
-    public Admin() {
-        this.adminID = adminIDCounter++;
-    }
-
 	//getters and setters
     public int getAdminID() {
         return adminID;
@@ -42,11 +36,7 @@ public class Admin extends Employee {
 
     @Override
     public String toString() {
-        return  adminID + " " + getEmployeeID() + " " + getPersonID();
-    }
-
-    public String toStringFile() {
-        return  adminID + " " + getEmployeeID() + " " + getPersonID();
+        return adminID + " " + super.toString();
     }
 
     public void toStringPrint() {

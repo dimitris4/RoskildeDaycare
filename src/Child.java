@@ -1,6 +1,3 @@
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-
 public class Child extends Person{
 
     private int childID;
@@ -11,14 +8,13 @@ public class Child extends Person{
     private boolean onWaitingList;
 
     // constructor
+
+
     public Child(String firstName, String lastName, int parentID) {
         super(firstName, lastName, null);
         this.childID = childIDCounter++;
         this.setPersonID(super.getPersonID());
         this.parentID = parentID;
-    }
-
-    public Child() {
     }
 
     public int getChildID() {
@@ -63,7 +59,12 @@ public class Child extends Person{
 
     @Override
     public String toString() {
-        return childID + " " + parentID + " " + firstName + " " + lastName + " " +onWaitingList;
+        return  childID +
+                " " + parentID +
+                " " + firstName + " " +
+                " " + lastName + " " +
+                " " + onWaitingList +
+                " " + super.toString();
     }
 
     public void toStringPrint() {

@@ -1,5 +1,3 @@
-import javax.crypto.Cipher;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 class UserInterface {
