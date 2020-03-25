@@ -43,54 +43,9 @@ public class MyApp {
 
     //populate information attributes of class MyApp
     public static void loadInfo () {
-
         ArrayList<Object> loadedLists = FM.readFromFiles();
-        // needs to read an ArrayList of Objects in the CORRECT order
-        // 0 : ArrayList of Admins
-        // 1 : ArrayList of Employees
-        // 2 : ArrayList of Workschedules
-        // 3 : ArrayList of Children
-        // 4 : ArrayList of Parents
-        // 5 : Integer for People count
-
-        //FOR USE
-        /*admins = (ArrayList<Admin>) loadedLists.get(0);
-        employees = (ArrayList<Employee>) loadedLists.get(1);
-        workSchedules = (ArrayList<WorkSchedule>) loadedLists.get(2);
-        children = (ArrayList<Child>) loadedLists.get(3);
-        parents = (ArrayList<Parent>) loadedLists.get(4);
-
-        //FOR ID COUNTS
-        adminID = admins.get(admins.size()-1).getAdminID();
-        employeeID = employees.get(employees.size()).getEmployeeID();
-        personID = loadedLists.get(7);
-        */
-
-        //FOR TESTING MAIN ADMIN
-        Admin testUser = new Admin("teodor", "jonasson", "26192327", "teodor", "jonasson");
-        admins.add(testUser);
-
-        Parent testParent1 = new Parent("mother", "mom", "11111111");
-        parents.add(testParent1);
-        Parent testParent2 = new Parent("father", "dad", "22222222");
-        parents.add(testParent2);
-        Parent testParent3 = new Parent("moose", "max", "33333333");
-        parents.add(testParent3);
-        
-        Child testChild1 = new Child("child", "lack", testParent1.getParentID());
-        children.add(testChild1);
-        Child testChild2 = new Child("what", "luck", testParent2.getParentID());
-        children.add(testChild2);
-        Child testChild3 = new Child("ever", "laack", testParent3.getParentID());
-        children.add(testChild3);
-
-        Employee test1 = new Employee("mark", "jackson", "23232323", "mark", "jackson");
-        employees.add(test1);
-        Employee test2 = new Employee("loui", "lack", "88776655", "loui", "lack");
-        employees.add(test2);
-        Employee test3 = new Employee("solvei", "markson", "11223344", "solvei", "markson");
-        employees.add(test3);
     }
+
 
     //EXIT PROGRAM     -- Upload all data from attributes to FileManagement --
     public static void exit() {

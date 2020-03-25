@@ -6,11 +6,6 @@ public class Parent extends Person {
     private static int parentIDCounter = 0;
 
     // constructor
-    public Parent(String firstName, String lastName, String telephone, int personID, int parentID) {
-        super(firstName, lastName, telephone);
-        this.setPersonID(personID);
-        this.parentID = parentID;
-    }
 
     public Parent(String firstName, String lastName, String telephone) {
         super(firstName, lastName, telephone);
@@ -33,5 +28,10 @@ public class Parent extends Person {
     @Override
     public String toString() {
         return parentID + " " + getPersonID();
+    }
+
+    public void toStringSimplePrintParent(){
+        System.out.printf( "\t %-35s | %-30s | \n",
+                "Full name   : " + super.getFirstName() + " " + super.getLastName(), "Parent ID    : " + getParentID());
     }
 }
