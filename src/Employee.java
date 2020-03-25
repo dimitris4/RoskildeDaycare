@@ -1,17 +1,21 @@
 public class Employee extends Person {
 
+    //private static FileManagement fm = new FileManagement();
+    private static int employeeIDCounter = 1;
     private int employeeID;
-    private static int employeeIDCounter = 0;
-    private int workScheduleID; // set -1 by default until the given employee is assigned a work schedule
     private String username;
     private String password;
     private int accessLevel;
 
     // constructor
-    public Employee(int employeeID, int workScheduleID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
+    public Employee() {
+        super();
+        employeeID = employeeIDCounter++;
+    }
+
+    public Employee(int employeeID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
         super(firstName, lastName, telephone);
         this.employeeID = employeeID;
-        this.workScheduleID = workScheduleID;
         this.username = username;
         this.password = password;
         this.accessLevel = accessLevel;
@@ -34,9 +38,6 @@ public class Employee extends Person {
         this.accessLevel = 1;
     }
 
-    public Employee() {
-        super();
-    }
 
     //Getters and setters
     public int getEmployeeID() {
@@ -45,14 +46,6 @@ public class Employee extends Person {
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
-    }
-
-    public int getWorkSchedule() {
-        return workScheduleID;
-    }
-
-    public void setWorkSchedule(int workScheduleID) {
-        this.workScheduleID = workScheduleID;
     }
 
     public String getUsername() {
@@ -84,10 +77,9 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return  employeeID +
-                " " + workScheduleID +
-                " " + username + " " +
-                " " + password + " " + accessLevel +
+        return        username +
+                " " + password +
+                " " + accessLevel +
                 " " + super.toString();
     }
 

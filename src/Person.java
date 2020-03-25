@@ -1,24 +1,22 @@
 public class Person {
 
-    private static int personIDCounter = 0;
+    //private static FileManagement fm = new FileManagement();
+    private static int personIDCounter = 1;
     private int personID;
     private String firstName;
     private String lastName;
     private String telephone;
 
     // constructor
+    public Person() {
+        this.personID = personIDCounter++;
+    }
+
     public Person(int personID, String firstName, String lastName, String telephone) {
         this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
-    }
-
-    public Person(int personID){
-        this.personID = personID;
-    }
-
-    public Person() {
     }
 
     public Person(String firstName, String lastName, Object o) {
@@ -58,8 +56,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return  personID +
-                " " + firstName + " " +
+        return        firstName + " " +
                 " " + lastName + " " +
                 " " + telephone;
     }

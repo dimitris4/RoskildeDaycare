@@ -1,18 +1,18 @@
 public class Parent extends Person {
 
+    //private static FileManagement fm = new FileManagement();
+    private static int parentIDCounter = 1;
     private int parentID;
-    private static int parentIDCounter = 0;
 
     // constructor
+    public Parent() {
+        parentID = parentIDCounter++;
+    }
 
     public Parent(String firstName, String lastName, String telephone) {
         super(firstName, lastName, telephone);
         this.setPersonID(super.getPersonID());
         this.parentID = parentIDCounter++;
-    }
-
-    public Parent() {
-
     }
 
     /*public Parent() {
@@ -30,8 +30,7 @@ public class Parent extends Person {
 
     @Override
     public String toString() {
-        return  parentID +
-                " " + super.toString();
+        return  super.toString();
     }
 
     public void toStringSimplePrintParent(){

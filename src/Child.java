@@ -1,13 +1,16 @@
 public class Child extends Person {
 
-    private int childID;
+    //private static FileManagement fm = new FileManagement();
     private static int childIDCounter = 1;
+    private int childID;
     private int parentID;
     private boolean onWaitingList;
 
     // constructors
-
-    public Child() {}
+    public Child() {
+        super();
+        this.childID = childIDCounter++;
+    }
 
     public Child(String firstName, String lastName, int parentID) {
         super(firstName, lastName, null);
@@ -42,10 +45,7 @@ public class Child extends Person {
 
     @Override
     public String toString() {
-        return        childID +
-                " " + parentID +
-                " " + onWaitingList +
-                " " + super.getPersonID() +
+        return        onWaitingList +
                 " " + super.getFirstName() +
                 " " + super.getLastName();
     }

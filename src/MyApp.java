@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,23 +17,23 @@ public class MyApp {
     private static ArrayList<WorkSchedule> workSchedules = new ArrayList<>();
     private static ArrayList<Child> children = new ArrayList<>();
     private static ArrayList<Parent> parents = new ArrayList<>();
+    private static ArrayList<Person> people = new ArrayList<>();
 
-    //ID counts
-    private static int personID = 4;
-    private static int employeeID = 4;
-    private static int adminID = 100;
 
     // START OF PROGRAM
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         //loads the files into MyApp attributes
         loadInfo();
+        System.out.println(children);
+        System.out.println(admins.size());
+
 
         //starts UI
-        //login();
+        login();
     }
 
-    public static void login() {
+    public static void login() throws FileNotFoundException {
         //starts logInUI
         UserInterface UI = new UserInterface();
         currentUser = UI.logInMenu();
@@ -52,22 +53,18 @@ public class MyApp {
         workSchedules = FM.readWorkSchedulesFromFile();
         children = FM.readChildrenFromFile();
         parents = FM.readParentsFromFile();
+        people = FM.readPeopleFromFile();
     }
 
 
     //EXIT PROGRAM     -- Upload all data from attributes to FileManagement --
-    public static void exit() {
-
-        //Create ArrayList for all system info so it can be loaded into FileManagement
-        ArrayList<Object> systemInfo = new ArrayList<>();
-        int[] peopleCount = {personID, employeeID, adminID};
-        //Add infoList in CORRECT order
-        systemInfo.add(admins);
-        systemInfo.add(employees);
-        systemInfo.add(workSchedules);
-        systemInfo.add(children);
-        systemInfo.add(parents);
-        //systemInfo.add(peopleCount);
+    public static void exit() throws FileNotFoundException {
+        FM.saveAdminsToFile(admins);
+        FM.saveEmployeesToFile(employees);
+        FM.saveWorkSchedulesToFile(workSchedules);
+        FM.saveChildrenToFile(children);
+        FM.saveParentsToFile(parents);
+        FM.savePeopleToFile(people);
     }
 
     //REMOVE ADMIN with adminID
@@ -112,32 +109,6 @@ public class MyApp {
         if (!check) {
             System.out.println("** Employee not found (not removed) **");
         }
-    }
-
-    //GETTERS AND SETTERS
-
-    public static int getPersonID() {
-        return personID;
-    }
-
-    public static void setPersonID(int personID) {
-        MyApp.personID = personID;
-    }
-
-    public static int getEmployeeID() {
-        return employeeID;
-    }
-
-    public static void setEmployeeID(int employeeID) {
-        MyApp.employeeID = employeeID;
-    }
-
-    public static int getAdminID() {
-        return adminID;
-    }
-
-    public static void setAdminID(int adminID) {
-        MyApp.adminID = adminID;
     }
 
     //get an Employee OR Admin object from Username

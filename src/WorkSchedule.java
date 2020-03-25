@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 
 public class WorkSchedule {
-    //private static int workScheduleIDCounter = 0; // auto-increment ID
-    //public Object printNicely;
-    //private int workScheduleID;
+
     private int employeeID;
     private ArrayList<Shift> shifts = new ArrayList<>();
 

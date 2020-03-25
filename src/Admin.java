@@ -1,15 +1,17 @@
 public class Admin extends Employee {
 
-    private static int adminIDCounter = 100;
+    //private static FileManagement fm = new FileManagement();
+    private static int adminIDCounter = 1;
     private int adminID;
 
     // constructors
     public Admin() {
         super();
+        adminID = adminIDCounter++;
     }
 
-    public Admin(int adminID, int employeeID, int workScheduleID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
-        super(employeeID, workScheduleID, username, password, accessLevel, personID, firstName, lastName, telephone);
+    public Admin(int adminID, int employeeID, String username, String password, int accessLevel, int personID, String firstName, String lastName, String telephone) {
+        super(employeeID, username, password, accessLevel, personID, firstName, lastName, telephone);
         this.adminID = adminID;
     }
 
@@ -36,7 +38,7 @@ public class Admin extends Employee {
 
     @Override
     public String toString() {
-        return adminID + " " + super.toString();
+        return super.toString();
     }
 
     public void toStringPrint() {

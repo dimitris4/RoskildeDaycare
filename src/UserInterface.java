@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 class UserInterface {
@@ -42,7 +43,7 @@ class UserInterface {
         return user;
     }
 
-    void adminMenu() {
+    void adminMenu() throws FileNotFoundException {
         int choice = -1;
         do {
             //Print menu options
@@ -58,8 +59,7 @@ class UserInterface {
             switch (choice) {
                 case 0:
                     MyApp.exit();
-                    printText("- EXIT PROGRAM -");
-                    choice = -1;
+                    System.exit(0);
                     break;
                 case 1:
                     employees();
@@ -409,7 +409,7 @@ class UserInterface {
     }
 
 
-    private void workScheduleMenu() {
+    private void workScheduleMenu() throws FileNotFoundException {
         while (true) {
             MyApp myApp = new MyApp();
             //printScheduleMenuLine();
@@ -450,7 +450,7 @@ class UserInterface {
         }
     }
 
-    private void updateWorkScheduleMenu() {
+    private void updateWorkScheduleMenu() throws FileNotFoundException {
         while (true) {
             MyApp myApp = new MyApp();
             printText("- Update Work Schedule - ");
@@ -656,7 +656,7 @@ class UserInterface {
     }
 
 
-    void employeeMenu() {
+    void employeeMenu() throws FileNotFoundException {
         int choice = -1;
 
         do{

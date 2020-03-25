@@ -1,9 +1,2 @@
-1   1   1   user_name   password    2   1   firstName   last_name   telephone1
-2   2   2   user_name   password    2   2   firstName   last_name   telephone1
-3   3   3   user_name   password    2   3   firstName   last_name   telephone1
-4   4   4   user_name   password    2   4   firstName   last_name   telephone1
-5   5   5   user_name   password    2   5   firstName   last_name   telephone1
-6   6   6   user_name   password    2   6   firstName   last_name   telephone1
-7   7   7   user_name   password    2   7   firstName   last_name   telephone1
-8   8   8   user_name   password    2   8   firstName   last_name   telephone1
-
+user_name password 2 Rheishum Cuhla  30293030
+user_name password 2 Nushad Rhahid  30293049
