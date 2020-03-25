@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -71,20 +73,50 @@ public class FileManagement {
             adm.println( admin.toStringFile() );
         }
         for (Employee employee : employees ) {
-            emp.println( employee.toStringFile() );
+           // emp.println( employee.toStringFile() );
         }
         for (WorkSchedule workSchedule : workSchedules ) {
-            work.println( workSchedule.toStringFile() );
+         //   work.println( workSchedule.toStringFile() );
         }
         for (Child child : children ) {
-            ch.println( child.toStringFile() );
+          //  ch.println( child.toStringFile() );
         }
         for (Parent parent : parents ) {
-            pa.println( parent.toStringFile() );
+           // pa.println( parent.toStringFile() );
         }
         for (int i = 0; i < 3; i++ ) {
-            counts.println( peopleCount.get(i) );
+          //  counts.println( peopleCount.get(i) );
         }
 
+    }
+
+    public ArrayList<WorkSchedule> readWorkSchedulesFromFile() throws FileNotFoundException, ParseException {
+        ArrayList<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
+        Scanner input = new Scanner(new File("workSchedules.txt"));
+        while (input.hasNextLine()) {
+            WorkSchedule workSchedule = new WorkSchedule();
+            String line = input.nextLine();
+            Scanner data = new Scanner(line);
+            workSchedule.setEmployeeID(data.nextInt());
+            ArrayList<Shift> shifts = new ArrayList<Shift>();
+            while (data.hasNext()) {
+                Shift shift = new Shift();
+                String startingTime = "";
+                for (int i = 0; i < 2; i++) {
+                    startingTime += data.next();
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                shift.setStartingTime(sdf.parse(startingTime));
+                String endingTime = "";
+                for (int i = 0; i < 2; i++) {
+                     endingTime += data.next();
+                }
+                shift.setEndingTime(sdf.parse(endingTime));
+                shifts.add(shift);
+            }
+            workSchedule.setShifts(shifts);
+            workSchedules.add(workSchedule);
+        }
+        return workSchedules;
     }
 }

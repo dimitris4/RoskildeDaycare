@@ -66,4 +66,9 @@ public class Person {
                             "\nPhone nr    : " + telephone +
                             "\nPerson ID   : " + personID );
     }
+
+    public void toStringSimplePrintPerson(){
+        System.out.printf( "\t %-35s | %-30s | \n",
+                "Full name   : " + firstName + " " + lastName, "Phone nr    : " + telephone);
+    }
 }
