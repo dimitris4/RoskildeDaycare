@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class UserInterface {
 
     private int space = 110;
+    private int space_schedule = 150;
     private ArrayList<Employee> emp = MyApp.getEmployees();
     private ArrayList<Admin> adm = MyApp.getAdmins();
 
@@ -420,11 +421,13 @@ class UserInterface {
     private void workScheduleMenu() {
         while (true) {
             MyApp myApp = new MyApp();
-            printText("- Schedules - ");
+            //printScheduleMenuLine();
+            printTextSchedule("- Schedules - ");
+            //printScheduleMenuLine();
             System.out.println();
-            System.out.printf("\t%-45s | %-40s | %-25s | %-30s \n", "> 1. Create new work schedule", "> 3. Display work schedule of employee", "> 5. Delete work schedule", "> 0. Exit");
-            System.out.printf("\t%-45s | %-40s | %-25s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
-            print();
+            System.out.printf("\t%-45s | %-40s | %-30s | %-30s \n", "> 1. Create new work schedule", "> 3. Display work schedule of employee", "> 5. Delete work schedule", "> 0. Exit");
+            System.out.printf("\t%-45s | %-40s | %-30s \n\n", "> 2. Display work schedule within date range", "> 4. Update work schedule", "> 6. Back");
+            printScheduleMenuLine();
             System.out.print("Select: ");
             int choice = Input.checkInt(0, 6);
             switch (choice) {
@@ -461,8 +464,8 @@ class UserInterface {
             MyApp myApp = new MyApp();
             printText("- Update Work Schedule - ");
             System.out.println();
-            System.out.printf("\t%-17s | %-37s | %-25s \n", "> 1. Add shift", "> 3. Change starting time of a shift", "> 5. Back");
-            System.out.printf("\t%-17s | %-37s | %-25s \n\n", "> 2. Remove shift", "> 4. Change ending time of a shift", "> 0. Exit");
+            System.out.printf("\t%-22s | %-37s | %-25s \n", "> 1. Add shift", "> 3. Change starting time of a shift", "> 5. Back");
+            System.out.printf("\t%-22s | %-37s | %-25s \n\n", "> 2. Remove shift", "> 4. Change ending time of a shift", "> 0. Exit");
             print();
             System.out.print("Select: ");
             int choice = Input.checkInt(0, 5);
@@ -532,10 +535,34 @@ class UserInterface {
         System.out.println(startSpaceString + text);
     }
 
+
+    // used in schedule menu
+    private void printTextSchedule(String text) {
+        int startSpace = ( space_schedule - text.length() ) / 2;
+        String stripe = "";
+        String startSpaceString = "";
+        for (int j = 0; j < space_schedule; j++) {
+            stripe += "-";
+        }
+        for (int i = 0; i < startSpace; i++ ){
+            startSpaceString += " ";
+        }
+        System.out.println( stripe + "\n" + startSpaceString + text + "\n" + stripe );
+    }
+
+
     private void print() {
 
         String stripe = "";
         for (int i = 0; i < space; i++) {
+            stripe += "-";
+        }
+        System.out.println(stripe);
+    }
+
+    private void printScheduleMenuLine() {
+        String stripe = "";
+        for (int i = 0; i < space_schedule; i++) {
             stripe += "-";
         }
         System.out.println(stripe);

@@ -341,59 +341,67 @@ public class MyApp {
         WorkSchedule wc = new WorkSchedule();
         wc.setEmployeeID(checkEmployeeID());
         ArrayList<Shift> arrayList = new ArrayList<Shift>();
-        System.out.print("Enter 'add shift' to add shifts, or 'quit' to exit: ");
-        str = console.nextLine();
         boolean a = false;
         while (!a) {
-            switch (str) {
-                case "add shift":
-                    System.out.println();
-                    System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
-                    Date startingTime = Input.insertDate();
-                    System.out.print("The  shift  ends at (use format: dd-MM-yyyy HH:mm): ");
-                    Date endingTime = Input.insertDate();
-                    Shift shift = new Shift(startingTime, endingTime);
-                    arrayList.add(shift);
-                    System.out.println();
-                    System.out.print("Does this shift repeat weekly? (yes/no): ");
-                    String choice = console.nextLine();
-                    boolean flag = false;
-                    while (!flag) {
-                        switch (choice) {
-                            case "yes":
-                                System.out.print("Ends on day (use format: dd-MM-yyyy): ");
-                                Date endsOnDate = Input.insertDateWithoutTime();
-                                Calendar cal1 = Calendar.getInstance();
-                                Calendar cal2 = Calendar.getInstance();
-                                cal1.setTime(shift.getStartingTime());
-                                cal2.setTime(shift.getEndingTime());
-                                System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
-                                while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
-                                    cal1.add(Calendar.DATE, 7);
-                                    cal2.add(Calendar.DATE, 7);
-                                    arrayList.add(new Shift(cal1.getTime(), cal2.getTime()));
-                                    shift = new Shift(cal1.getTime(), cal2.getTime());
-                                }
-                                flag = true;
-                                break;
-                            case "no":
-                                flag = true;
-                                break;
-                            default:
-                                System.out.print("Incorrect input. Enter value (yes/no): ");
-                                choice = console.nextLine();
-                                break;
-                        }
+            System.out.println();
+            System.out.print("Enter 'add shift' to add a shift, or 'quit' to exit: ");
+            str = console.nextLine();
+            if (str.equals("add shift")) {
+                System.out.println();
+                System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
+                Date startingTime = Input.insertDate();
+                System.out.println();
+                System.out.print("The  shift  ends at (use format: dd-MM-yyyy HH:mm): ");
+                Date endingTime = Input.insertDate();
+                Shift shift = new Shift(startingTime, endingTime);
+                arrayList.add(shift);
+                System.out.println();
+                System.out.print("Does this shift repeat weekly? (yes/no): ");
+                String choice = console.nextLine();
+                boolean flag = false;
+                while (!flag) {
+                    switch (choice) {
+                        case "yes":
+                            System.out.println();
+                            System.out.print("Ends on day (use format: dd-MM-yyyy): ");
+                            Date endsOnDate = Input.insertDateWithoutTime();
+                            Calendar cal1 = Calendar.getInstance();
+                            Calendar cal2 = Calendar.getInstance();
+                            cal1.setTime(shift.getStartingTime());
+                            cal2.setTime(shift.getEndingTime());
+                            //System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
+                            while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
+                                cal1.add(Calendar.DATE, 7);
+                                cal2.add(Calendar.DATE, 7);
+                                arrayList.add(new Shift(cal1.getTime(), cal2.getTime()));
+                                shift = new Shift(cal1.getTime(), cal2.getTime());
+                            }
+                            flag = true;
+                            wc.setShifts(arrayList);
+                            //workSchedules.add(wc);
+                            //System.out.println("Employee ID: " + wc.getEmployeeID());
+                            //System.out.println("Shifts: " + wc.getShifts());
+                            break;
+                        case "no":
+                            wc.setShifts(arrayList);
+                            //workSchedules.add(wc);
+                            flag = true;
+                            break;
+                        default:
+                            System.out.print("Incorrect input. Enter value (yes/no): ");
+                            choice = console.nextLine();
+                            break;
                     }
-                case "quit":
-                    wc.setShifts(arrayList);
+                }
+            } else if (str.equals("quit")) {
+                if (wc.getShifts().size() == 0) {
+                    workSchedules.remove(wc);
+                } else {
                     workSchedules.add(wc);
-                    System.out.println("Employee ID: " + wc.getEmployeeID());
-                    System.out.println("Shifts: " + wc.getShifts());
-                    return;
-                default:
-                    System.out.print("Incorrect input. Enter 'add shift' or 'quit': ");
-                    str = console.nextLine();
+                }
+                a = true;
+            } else {
+                System.out.print("Incorrect input. ");
             }
         }
     }
@@ -423,14 +431,14 @@ public class MyApp {
 
     public void displayWorkScheduleWithinDateRange() {
         System.out.println();
-        System.out.println("_This function displays you all the shifts between two dates.");
+        System.out.println("'This function displays the employee IDs and their shifts between two dates.'");
+        System.out.println();
         System.out.print("Enter start date (use format: dd-MM-yyyy): ");
         Date date1 = Input.insertDateWithoutTime();
         System.out.print("Enter  end  date (use format: dd-MM-yyyy): ");
         Date date2 = Input.insertDateWithoutTime();
         for (WorkSchedule wc : getWorkSchedules()) {
             for (int i = 0; i < wc.getShifts().size(); i++) {
-                System.out.println("Employee ID: " + wc.getEmployeeID());
                 if (wc.getShifts().get(i).getStartingTime().compareTo(date1) > 0
                     && wc.getShifts().get(i).getStartingTime().compareTo(date2) < 0) {
                     System.out.println(wc.getShifts().get(i));
@@ -442,8 +450,11 @@ public class MyApp {
     public void displayWorkScheduleOfEmployee() {
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
+            System.out.println("Employee ID: " + wc.getEmployeeID());
             if (wc.getEmployeeID() == employeeID) {
-                System.out.println(wc);
+                for (int i = 0; i < wc.getShifts().size(); i++) {
+                    System.out.println(wc.getShifts().get(i));
+                }
             }
         }
     }
@@ -497,6 +508,20 @@ public class MyApp {
                     }
                 } else {
                     System.out.println("The shift cannot be added because it overlaps with another one.");
+                }
+            } else {
+                while (true) {
+                    System.out.print("The employee with ID" + employeeID + "does not have a work schedule yet. Do you want to create it now? (yes/no): ");
+                    String answer = "";
+                    answer = console.next();
+                    if (answer.equals("yes")) {
+                        createNewWorkSchedule();
+                    } else if (answer.equals("no")) {
+                        return;
+                    } else {
+                        System.out.print("Selection incorrect. Enter a valid value (yes/no): ");
+                        answer = console.next();
+                    }
                 }
             }
         }
