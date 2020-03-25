@@ -10,8 +10,17 @@ public class Child extends Person{
     private boolean onWaitingList;
 
     // constructor
-    public Child(int parentID) {
+    public Child(String firstName, String lastName, int parentID, int personID, int childID) {
+        super(firstName, lastName, null);
+        this.childID = childID;
+        this.setPersonID(personID);
+        this.parentID = parentID;
+    }
+
+    public Child(String firstName, String lastName, int parentID) {
+        super(firstName, lastName, null);
         this.childID = childIDCounter++;
+        this.setPersonID(super.getPersonID());
         this.parentID = parentID;
     }
 

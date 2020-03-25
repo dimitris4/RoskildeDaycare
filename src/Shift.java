@@ -1,6 +1,7 @@
 import java.util.Date;
 
 public class Shift {
+
     private int shiftID;
     private static int shiftIDCounter = 1;
     private int workScheduleID;
