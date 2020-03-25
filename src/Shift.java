@@ -15,6 +15,10 @@ public class Shift {
         //this.shiftID = shiftIDCounter++;
     }
 
+    public Shift() {
+
+    }
+
     public void setDate(Date date) {
         this.startingTime = date;
     }

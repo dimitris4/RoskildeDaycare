@@ -126,7 +126,7 @@ class Input {
                 sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 break;
             } catch (ParseException e) {
-                System.out.print("Day must have the following format (dd/mm/yyyy HH:mm): ");
+                System.out.print("Day must have the following format (dd-MM-yyyy HH:mm): ");
                 str = console.nextLine();
                 continue;
             }
@@ -150,7 +150,7 @@ class Input {
                 sdf = new SimpleDateFormat("dd-MM-yyyy");
                 break;
             } catch (ParseException e) {
-                System.out.print("Day must have the following format (dd/mm/yyyy): ");
+                System.out.print("Day must have the following format (dd-mm-yyyy): ");
                 str = console.nextLine();
                 continue;
             }
