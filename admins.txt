@@ -1,2 +1,2 @@
-user_name password 2 Rheishum Cuhla  30293030
-user_name password 2 Nushad Rhahid  30293049
+user_name password 2 Rheishum  Cuhla  30293030
+user_name password 2 Nushad  Rhahid  30293049

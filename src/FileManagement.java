@@ -14,9 +14,9 @@ public class FileManagement {
     public FileManagement() { }
 
 
-    /****************************************************************/
-    /*            methods for reading data from files               */
-    /****************************************************************/
+    /*****************************************************************************/
+    /*              methods for reading data from files (written by Dimitrios)   */
+    /*****************************************************************************/
 
     public ArrayList<Admin> readAdminsFromFile() {
         Scanner input = null;
@@ -95,11 +95,11 @@ public class FileManagement {
             }
             ArrayList<Shift> shifts = new ArrayList<Shift>();
             while (data.hasNext()) {
-                String str = data.next() + " " + data.next();
-                String str2 = data.next() + " " + data.next();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String str = new StringBuilder(16).append(data.next()).append(" ").append(data.next()).toString();
+                String str2 = new StringBuilder(16).append(data.next()).append(" ").append(data.next()).toString();
                 Date startingDate = null;
                 Date endingDate = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                 try {
                     startingDate = sdf.parse(str);
                     endingDate = sdf.parse(str2);
@@ -108,6 +108,7 @@ public class FileManagement {
                 }
                 shifts.add(new Shift(startingDate, endingDate));
             }
+            wc.setShifts(shifts);
             workSchedules.add(wc);
         }
         return workSchedules;
@@ -191,82 +192,6 @@ public class FileManagement {
         }
         return people;
     }
-
-
-
-    /**********************************************************/
-    /*          methods for finding the next ID number        */
-    /**********************************************************/
-
-    /*public int countNumberEmployeeFromFile() {
-        Scanner input = null;
-        try {
-            input = new Scanner(new File("employees.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
-        int counter = 0;
-        while (input.hasNextLine()) {
-            counter++;
-        }
-        return counter;
-    }
-
-    public int countNumberAdminsFromFile() {
-        Scanner input = null;
-        try {
-            input = new Scanner(new File("admins.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
-        int counter = 0;
-        while (input.hasNextLine()) {
-            counter++;
-        }
-        return counter;
-    }
-
-    public int countNumberChildrenFromFile() {
-        Scanner input = null;
-        try {
-            input = new Scanner(new File("children.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
-        int counter = 0;
-        while (input.hasNextLine()) {
-            counter++;
-        }
-        return counter;
-    }
-
-    public int countNumberParentsFromFile() {
-        Scanner input = null;
-        try {
-            input = new Scanner(new File("parents.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
-        int counter = 0;
-        while (input.hasNextLine()) {
-            counter++;
-        }
-        return counter;
-    }
-
-    public int countNumberPeopleFromFile() {
-        Scanner input = null;
-        try {
-            input = new Scanner(new File("people.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        }
-        int counter = 0;
-        while (input.hasNextLine()) {
-            counter++;
-        }
-        return counter;
-    }*/
 
 
 

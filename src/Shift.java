@@ -38,12 +38,12 @@ public class Shift {
 
     @Override
     public String toString() {
-        return formatDate(startingTime) + " " + formatDate(endingTime);
+        return " " + formatDate(startingTime) + " " + formatDate(endingTime);
     }
 
-    //converts date to string with this format: dd/mm/yyyy
+    //converts date to string with this format: dd-MM-yyyy HH:mm
     public String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         return sdf.format(date);
     }
 }

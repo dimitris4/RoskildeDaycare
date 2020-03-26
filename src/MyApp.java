@@ -1,4 +1,6 @@
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,9 +27,9 @@ public class MyApp {
 
         //loads the files into MyApp attributes
         loadInfo();
-        System.out.println(children);
-        System.out.println(admins.size());
-
+        System.out.println(workSchedules.get(0).getShifts());
+        //System.out.println(children);
+        //System.out.println(admins.size());
 
         //starts UI
         login();
@@ -262,9 +264,9 @@ public class MyApp {
     }
 
 
-    /*******************************************************
-    /*      Work Schedule related methods (Dimitris)       */
-    /*******************************************************/
+    /*******************************************************************/
+    /*      Work Schedule related methods (written by Dimitrios)       */
+    /*******************************************************************/
 
     public void createNewWorkSchedule() {
         UserInterface ui = new UserInterface();
@@ -369,20 +371,22 @@ public class MyApp {
         Date date1 = Input.insertDateWithoutTime();
         System.out.print("Enter  end  date (use format: dd-MM-yyyy): ");
         Date date2 = Input.insertDateWithoutTime();
-        for (WorkSchedule wc : getWorkSchedules()) {
+        System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " Starting Time ", " Ending Time ");
+        for (WorkSchedule wc : workSchedules) {
             for (int i = 0; i < wc.getShifts().size(); i++) {
                 if (wc.getShifts().get(i).getStartingTime().compareTo(date1) > 0
                     && wc.getShifts().get(i).getStartingTime().compareTo(date2) < 0) {
-                    System.out.println(wc.getShifts().get(i));
+                    System.out.printf("%-25s %-25s  %-25s \n", wc.getEmployeeID(), formatDate(wc.getShifts().get(i).getStartingTime()),
+                            formatDate(wc.getShifts().get(i).getEndingTime()));
                 }
             }
         }
     }
 
     public void displayWorkScheduleOfEmployee() {
+        System.out.println(workSchedules.get(0).getShifts());
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
-            System.out.println("Employee ID: " + wc.getEmployeeID());
             if (wc.getEmployeeID() == employeeID) {
                 for (int i = 0; i < wc.getShifts().size(); i++) {
                     System.out.println(wc.getShifts().get(i));
@@ -514,5 +518,12 @@ public class MyApp {
                 }
             }
         }
+    }
+
+    public String formatDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        String strDate;
+        strDate = dateFormat.format(date);
+        return strDate;
     }
 }

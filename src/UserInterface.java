@@ -19,7 +19,7 @@ class UserInterface {
         String password = "";
         boolean login = false;
         printText("- LOGIN -");
-        while (!login){
+        while (!login) {
             System.out.print("Username : ");
             username = Input.checkUsername();
             user = MyApp.getEmployee(username);
@@ -400,9 +400,9 @@ class UserInterface {
             System.out.println();
         }
         System.out.println();
-        System.out.println("---------------------------Admins--------------------------------------");
+        System.out.println("-----------------------------Admins------------------------------------");
+        System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
         for (Admin admin : adm) {
-            System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
             System.out.printf("%-25s %-25s  %-25s \n", admin.getEmployeeID(), admin.getFirstName(), admin.getLastName());
             System.out.println();
         }
