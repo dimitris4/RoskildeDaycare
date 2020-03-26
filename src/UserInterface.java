@@ -403,7 +403,7 @@ class UserInterface {
         System.out.println("-----------------------------Admins------------------------------------");
         System.out.printf("%-25s %-25s  %-25s \n", " Employee ID ", " First Name ", " Last Name ");
         for (Admin admin : adm) {
-            System.out.printf("%-25s %-25s  %-25s \n", admin.getEmployeeID(), admin.getFirstName(), admin.getLastName());
+            System.out.printf("%-25s %-25s  %-25s", admin.getEmployeeID(), admin.getFirstName(), admin.getLastName());
             System.out.println();
         }
     }
@@ -424,7 +424,7 @@ class UserInterface {
             switch (choice) {
                 case 0:
                     MyApp.exit();
-                    printText("- EXIT PROGRAM -");
+                    System.exit(0);
                     break;
                 case 1:
                     myApp.createNewWorkSchedule();

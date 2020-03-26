@@ -27,9 +27,6 @@ public class MyApp {
 
         //loads the files into MyApp attributes
         loadInfo();
-        System.out.println(workSchedules.get(0).getShifts());
-        //System.out.println(children);
-        //System.out.println(admins.size());
 
         //starts UI
         login();
@@ -384,12 +381,14 @@ public class MyApp {
     }
 
     public void displayWorkScheduleOfEmployee() {
-        System.out.println(workSchedules.get(0).getShifts());
+        //System.out.println(workSchedules.get(0).getShifts());
         int employeeID = checkEmployeeID();
+        System.out.printf("%-25s %-25s\n", " Starting Time ", " Ending Time ");
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
                 for (int i = 0; i < wc.getShifts().size(); i++) {
-                    System.out.println(wc.getShifts().get(i));
+                    System.out.printf("%-25s %-25s\n", formatDate(wc.getShifts().get(i).getStartingTime()),
+                            formatDate(wc.getShifts().get(i).getEndingTime()));
                 }
             }
         }
@@ -402,64 +401,15 @@ public class MyApp {
 
     public void addShift() {
         int employeeID = checkEmployeeID();
-        for (WorkSchedule wc : workSchedules) {
-            if (wc.getEmployeeID() == employeeID) {
-                System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
-                Date startingTime = Input.insertDate();
-                System.out.print("The shift ends at (use format: dd-MM-yyyy HH:mm): ");
-                Date endingTime = Input.insertDate();
-                if (shiftsDoNotOverlap(startingTime, wc.getEmployeeID())) {
-                    Shift shift = new Shift(startingTime, endingTime);
-                    wc.getShifts().add(shift);
-                    System.out.println();
-                    System.out.print("Does this shift repeat weekly? (yes/no): ");
-                    String choice = console.nextLine();
-                    boolean flag = false;
-                    while (!flag) {
-                        switch (choice) {
-                            case "yes":
-                                System.out.print("Ends on day (use format: dd-MM-yyyy): ");
-                                Date endsOnDate = Input.insertDateWithoutTime();
-                                Calendar cal1 = Calendar.getInstance();
-                                Calendar cal2 = Calendar.getInstance();
-                                cal1.setTime(shift.getStartingTime());
-                                cal2.setTime(shift.getEndingTime());
-                                System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
-                                while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
-                                    cal1.add(Calendar.DATE, 7);
-                                    cal2.add(Calendar.DATE, 7);
-                                    wc.getShifts().add(new Shift(cal1.getTime(), cal2.getTime()));
-                                    shift = new Shift(cal1.getTime(), cal2.getTime());
-                                }
-                                flag = true;
-                                break;
-                            case "no":
-                                flag = true;
-                                break;
-                            default:
-                                System.out.print("Incorrect input. Enter value (yes/no): ");
-                                choice = console.nextLine();
-                                break;
-                        }
-                    }
-                } else {
-                    System.out.println("The shift cannot be added because it overlaps with another one.");
-                }
-            } else {
-                while (true) {
-                    System.out.print("The employee with ID" + employeeID + "does not have a work schedule yet. Do you want to create it now? (yes/no): ");
-                    String answer = "";
-                    answer = console.next();
-                    if (answer.equals("yes")) {
-                        createNewWorkSchedule();
-                    } else if (answer.equals("no")) {
-                        return;
-                    } else {
-                        System.out.print("Selection incorrect. Enter a valid value (yes/no): ");
-                        answer = console.next();
-                    }
-                }
-            }
+        for (WorkSchedule wc)
+        System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
+        Date startingTime = Input.insertDate();
+        System.out.print("The shift ends at (use format: dd-MM-yyyy HH:mm): ");
+        Date endingTime = Input.insertDate();
+        if (shiftsDoNotOverlap(startingTime, employeeID)) {
+            Shift shift = new Shift(startingTime, endingTime);
+        } else {
+            System.out.println("The shift cannot be added because it overlaps with another one.");
         }
     }
 
