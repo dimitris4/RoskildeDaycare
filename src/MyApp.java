@@ -380,9 +380,8 @@ public class MyApp {
         }
     }
 
-    public void displayWorkScheduleOfEmployee() {
+    public void displayWorkScheduleOfEmployee(int employeeID) {
         //System.out.println(workSchedules.get(0).getShifts());
-        int employeeID = checkEmployeeID();
         System.out.printf("%-25s %-25s\n", " Starting Time ", " Ending Time ");
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
@@ -427,21 +426,23 @@ public class MyApp {
         workSchedules.add(newWc);
     }
 
-    /*public void removeShift() {
+    public void removeShift() {
         int employeeID = checkEmployeeID();
+        displayWorkScheduleOfEmployee(employeeID);
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
-                Date date = Input.insertDate();
-                for (Shift shift : wc.getShifts()) {
-                    if (shift.getStartingTime().compareTo(date) == 0) {
-                        wc.getShifts().remove(shift);
+                System.out.print("Enter the date to remove a shift (use format dd-mm-yyyy): ");
+                Date date = Input.insertDateWithoutTime();
+                for (int i = 0; i < wc.getShifts().size(); i++) {
+                    if (Input.diffInDays(date, wc.getShifts().get(i).getStartingTime()) == 0) {
+                        wc.getShifts().remove(i);
                     }
                 }
             }
         }
     }
 
-    public void changeStartingTime() {
+    /*public void changeStartingTime() {
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {

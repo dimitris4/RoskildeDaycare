@@ -389,7 +389,7 @@ class UserInterface {
     }
 
     /**********************************************************/
-    /*    Dimitrios - Methods for the Work schedules menu     */
+    /*    Dimitrios: Methods for the Work schedules menu     */
     /**********************************************************/
 
     public void printEmployees() {
@@ -433,7 +433,7 @@ class UserInterface {
                     myApp.displayWorkScheduleWithinDateRange();
                     break;
                 case 3:
-                    myApp.displayWorkScheduleOfEmployee();
+                    myApp.displayWorkScheduleOfEmployee(myApp.checkEmployeeID());
                     break;
                 case 4:
                     updateWorkScheduleMenu();
@@ -469,7 +469,7 @@ class UserInterface {
                     myApp.addShift();
                     break;
                 case 2:
-                    //myApp.removeShift();
+                    myApp.removeShift();
                     break;
                 case 3:
                     //myApp.changeStartingTime();
