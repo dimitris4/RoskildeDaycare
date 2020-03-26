@@ -15,7 +15,7 @@ public class FileManagement {
 
 
     /*****************************************************************************/
-    /*              methods for reading data from files (written by Dimitrios)   */
+    /*   methods for reading data from files (written by Radu and Dimitrios)     */
     /*****************************************************************************/
 
     public ArrayList<Admin> readAdminsFromFile() {
@@ -195,9 +195,9 @@ public class FileManagement {
 
 
 
-    /**************************************************/
-    /*           methods for writing to files        */
-    /**************************************************/
+    /********************************************************************/
+    /*           methods for writing to files (writtten by Radu)        */
+    /********************************************************************/
 
     public void saveAdminsToFile(ArrayList<Admin> admins) throws FileNotFoundException {
         PrintStream output = new PrintStream(new File("admins.txt"));
