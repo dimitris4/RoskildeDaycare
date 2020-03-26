@@ -401,32 +401,33 @@ public class MyApp {
 
     public void addShift() {
         int employeeID = checkEmployeeID();
-        for (WorkSchedule wc)
         System.out.print("The shift starts at (use format: dd-MM-yyyy HH:mm): ");
         Date startingTime = Input.insertDate();
         System.out.print("The shift ends at (use format: dd-MM-yyyy HH:mm): ");
         Date endingTime = Input.insertDate();
-        if (shiftsDoNotOverlap(startingTime, employeeID)) {
-            Shift shift = new Shift(startingTime, endingTime);
-        } else {
-            System.out.println("The shift cannot be added because it overlaps with another one.");
-        }
-    }
-
-    public boolean shiftsDoNotOverlap(Date startingTime, int employeeID) {
-        for (int i = 0; i < workSchedules.size(); i++) {
-            if (workSchedules.get(i).getEmployeeID() == employeeID) {
-                for (int j = 0; j < workSchedules.get(i).getShifts().size(); j++) {
-                    if (workSchedules.get(i).getShifts().get(j).getStartingTime().compareTo(startingTime) == 0) {
-                        return false;
+        for (WorkSchedule wc : workSchedules) {
+            if (wc.getEmployeeID() == employeeID) {
+                for (Shift shift : wc.getShifts()) {
+                    if (Input.diffInDays(shift.getStartingTime(), startingTime) == 0) {
+                        System.out.println("The shift cannot be added since the employee has a shift on that day.");
+                    } else {
+                        Shift newShift = new Shift(startingTime, endingTime);
+                        wc.getShifts().add(newShift);
                     }
                 }
             }
         }
-        return true;
+        // if this employee does not have any shifts yet, then create a new work schedule
+        WorkSchedule newWc = new WorkSchedule();
+        newWc.setEmployeeID(employeeID);
+        ArrayList<Shift> shifts = new ArrayList<Shift>();
+        Shift newShift = new Shift(startingTime, endingTime);
+        shifts.add(newShift);
+        newWc.setShifts(shifts);
+        workSchedules.add(newWc);
     }
 
-    public void removeShift() {
+    /*public void removeShift() {
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
@@ -468,7 +469,7 @@ public class MyApp {
                 }
             }
         }
-    }
+    }*/
 
     public String formatDate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");

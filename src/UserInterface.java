@@ -469,13 +469,13 @@ class UserInterface {
                     myApp.addShift();
                     break;
                 case 2:
-                    myApp.removeShift();
+                    //myApp.removeShift();
                     break;
                 case 3:
-                    myApp.changeStartingTime();
+                    //myApp.changeStartingTime();
                     break;
                 case 4:
-                    myApp.changeEndingTime();
+                    //myApp.changeEndingTime();
                     break;
                 case 5:
                     workScheduleMenu();

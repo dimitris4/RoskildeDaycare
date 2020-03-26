@@ -196,7 +196,7 @@ public class FileManagement {
 
 
     /**************************************************/
-    /*           methods for writing to files         */
+    /*           methods for writing to files        */
     /**************************************************/
 
     public void saveAdminsToFile(ArrayList<Admin> admins) throws FileNotFoundException {
