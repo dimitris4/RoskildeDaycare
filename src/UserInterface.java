@@ -472,7 +472,7 @@ class UserInterface {
                     myApp.removeShift();
                     break;
                 case 3:
-                    //myApp.changeStartingTime();
+                    myApp.changeStartingTime();
                     break;
                 case 4:
                     //myApp.changeEndingTime();

@@ -266,14 +266,14 @@ public class MyApp {
     /*******************************************************************/
 
     public void createNewWorkSchedule() {
-        UserInterface ui = new UserInterface();
-        ui.printEmployees();
+        UserInterface ui = new UserInterface(); // in class user interface we have the println statements for the menus.
+        ui.printEmployees();   // this method just prints employees and admins to the console
         String str = "";
         WorkSchedule wc = new WorkSchedule();
         wc.setEmployeeID(checkEmployeeID());
-        ArrayList<Shift> arrayList = new ArrayList<Shift>();
+        ArrayList<Shift> arrayList = new ArrayList<Shift>();  // initialize an array list that holds all shifts of an employee object
         boolean a = false;
-        while (!a) {
+        while (!a) {  // i have a boolean value here because i want the loop to run until the user enter a valid value.
             System.out.println();
             System.out.print("Enter 'add shift' to add a shift, or 'quit' to exit: ");
             str = console.nextLine();
@@ -290,17 +290,18 @@ public class MyApp {
                 System.out.print("Does this shift repeat weekly? (yes/no): ");
                 String choice = console.nextLine();
                 boolean flag = false;
-                while (!flag) {
+                while (!flag) {   // i want the loop to run until the user enters either yes or no
                     switch (choice) {
                         case "yes":
                             System.out.println();
                             System.out.print("Ends on day (use format: dd-MM-yyyy): ");
                             Date endsOnDate = Input.insertDateWithoutTime();
-                            Calendar cal1 = Calendar.getInstance();
-                            Calendar cal2 = Calendar.getInstance();
+                            Calendar cal1 = Calendar.getInstance(); // i use the add days function of the calendar class
+                            Calendar cal2 = Calendar.getInstance(); // in order to manipulate date objects
                             cal1.setTime(shift.getStartingTime());
                             cal2.setTime(shift.getEndingTime());
-                            //System.out.println(Input.diffInDays(shift.getStartingTime(), endsOnDate));
+                            // custom method diffInDays calculates the difference between two dates in days
+                            // if the end day is more than a week ahead, then create a new shift for next week (i.e. increase current date by 7 days).
                             while (Input.diffInDays(shift.getStartingTime(), endsOnDate) >= 7) {
                                 cal1.add(Calendar.DATE, 7);
                                 cal2.add(Calendar.DATE, 7);
@@ -309,13 +310,9 @@ public class MyApp {
                             }
                             flag = true;
                             wc.setShifts(arrayList);
-                            //workSchedules.add(wc);
-                            //System.out.println("Employee ID: " + wc.getEmployeeID());
-                            //System.out.println("Shifts: " + wc.getShifts());
                             break;
                         case "no":
                             wc.setShifts(arrayList);
-                            //workSchedules.add(wc);
                             flag = true;
                             break;
                         default:
@@ -326,9 +323,9 @@ public class MyApp {
                 }
             } else if (str.equals("quit")) {
                 if (wc.getShifts().size() == 0) {
-                    workSchedules.remove(wc);
+                    workSchedules.remove(wc);  // if the user quits the session before even adding one shift, i remove the work schedule object.
                 } else {
-                    workSchedules.add(wc);
+                    workSchedules.add(wc); // if user quits session after adding some shifts, add the work schedule object to static variable
                 }
                 a = true;
             } else {
@@ -442,15 +439,17 @@ public class MyApp {
         }
     }
 
-    /*public void changeStartingTime() {
+    public void changeStartingTime() {
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
-                Date date = Input.insertDate();
-                for (Shift shift : wc.getShifts()) {
-                    if (shift.getStartingTime().compareTo(date) == 0) {
+                System.out.print("Enter the date to find the shift you want to update (use format dd-mm-yyyy): ");
+                Date date = Input.insertDateWithoutTime();
+                for (int i = 0; i < wc.getShifts().size(); i++) {
+                    if (Input.diffInDays(date, wc.getShifts().get(i).getStartingTime()) == 0) {
                         System.out.print("Enter new starting time (use format: dd-MM-yyyy HH:mm): ");
-                        shift.setStartingTime(Input.insertDate());
+                        Date newStartingTime = Input.insertDateWithoutTime();
+                        wc.getShifts().get(i).setStartingTime(newStartingTime);
                     }
                 }
             }
@@ -461,16 +460,18 @@ public class MyApp {
         int employeeID = checkEmployeeID();
         for (WorkSchedule wc : workSchedules) {
             if (wc.getEmployeeID() == employeeID) {
-                Date date = Input.insertDate();
-                for (Shift shift : wc.getShifts()) {
-                    if (shift.getEndingTime().compareTo(date) == 0) {
+                System.out.print("Enter the date to find the shift you want to update (use format dd-mm-yyyy): ");
+                Date date = Input.insertDateWithoutTime();
+                for (int i = 0; i < wc.getShifts().size(); i++) {
+                    if (Input.diffInDays(date, wc.getShifts().get(i).getStartingTime()) == 0) {
                         System.out.print("Enter new ending time (use format: dd-MM-yyyy HH:mm): ");
-                        shift.setStartingTime(Input.insertDate());
+                        Date newEndingTime = Input.insertDateWithoutTime();
+                        wc.getShifts().get(i).setEndingTime(newEndingTime);
                     }
                 }
             }
         }
-    }*/
+    }
 
     public String formatDate(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
